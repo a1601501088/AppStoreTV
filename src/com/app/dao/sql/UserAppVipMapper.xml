@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.dao.UserAppVipMapper">
+
+    <insert id="insert" parameterType="com.app.model.UserAppVip">
+    insert into USER_APP_VIP (USER_ID, USER_TOKEN, APP_NAME, 
+      APP_PACKGE, APP_PACE, APP_PRICE, 
+      APP_TIME, APP_CRITE, APP_EXPIRE,APP_ID,VIP_STATUS
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{userToken,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, 
+      #{appPackge,jdbcType=VARCHAR}, #{appPace,jdbcType=VARCHAR}, #{appPrice,jdbcType=VARCHAR}, 
+      #{appTime,jdbcType=VARCHAR}, #{appCrite,jdbcType=VARCHAR}, #{appExpire,jdbcType=VARCHAR}
+      , #{appId,jdbcType=VARCHAR} , #{vipStatus,jdbcType=VARCHAR}
+      )
+  </insert>
+
+    <select id="selectByBean" parameterType="com.app.model.UserAppVip" resultType="com.app.model.UserAppVip">
+  	select * from USER_APP_VIP where USER_ID =#{userId,jdbcType=VARCHAR}  and  APP_NAME = #{appName,jdbcType=VARCHAR}
+  	USER_TOKEN = #{userToken,jdbcType=VARCHAR} and APP_ID = #{appId,jdbcType=VARCHAR}
+  </select>
+
+
+    <select id="queryApp" parameterType="com.app.model.UserApp" resultType="com.app.model.UserAppVip">
+    SELECT * FROM  USER_APP_VIP WHERE USER_ID = #{userId} and APP_ID = #{appId}
+  </select>
+
+    <update id="update" parameterType="com.app.model.UserAppVip">
+        UPDATE USER_APP_VIP
+        <set>
+            <if test="appExpire!=null and appExpire!=''">
+                APP_EXPIRE = #{appExpire,jdbcType=VARCHAR},
+            </if>
+            <if test="vipStatus!=null and vipStatus!=''">
+                VIP_STATUS = #{vipStatus,jdbcType=VARCHAR},
+            </if>
+
+            <if test="appDay!=null and appDay!=''">
+                APP_DAY = #{appDay,jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE USER_ID = #{userId}  AND APP_ID=#{appId}
+    </update>
+
+    <select id="queryAppList" parameterType="Map" resultType="com.app.model.UserAppVip">
+        SELECT * FROM  USER_APP_VIP WHERE USER_ID = #{userId} AND APP_EXPIRE &gt;= #{currentDate}
+    </select>
+
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" parameterType="Map" resultType="com.app.model.UserAppVip">
+        select * from
+        (select a.*, rownum rn from
+        (select b.* from user_app_vip b
+        <where>
+            <if test="userId != null">b.user_Id like #{userId} </if>
+
+        </where>
+        order by b.app_crite desc) a
+        where rownum &lt;= #{endRow}) c
+        where c.rn &gt;= #{startRow}
+    </select>
+
+    <!-- 分页查询总条数 -->
+    <select id="selectTotalRows" parameterType="Map" resultType="int">
+        select count(*) from user_app_vip
+        <where>
+            <if test="userId != null">user_Id like #{userId}</if>
+        </where>
+    </select>
+
+
+    <select id="queryAppVipInfo" parameterType="Map"  resultType="com.app.model.UserAppVip">
+         SELECT * FROM  USER_APP_VIP WHERE USER_ID = #{userId} and APP_ID = #{appId}
+    </select>
+<!--创建包月订单-->
+    <insert id="createVip" parameterType="com.app.model.UserAppVip">
+        insert into USER_APP_VIP (USER_ID, USER_TOKEN, APP_NAME,
+      APP_PACKGE, APP_PACE, APP_PRICE,
+      APP_TIME, APP_CRITE, APP_EXPIRE,APP_ID,VIP_STATUS
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{userToken,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR},
+      #{appPackge,jdbcType=VARCHAR}, #{appPace,jdbcType=VARCHAR}, #{appPrice,jdbcType=VARCHAR},
+      #{appTime,jdbcType=VARCHAR}, to_char( SYSDATE,'YYYY-MM-DD HH24:MI:SS'), #{appExpire,jdbcType=VARCHAR}
+      , #{appId,jdbcType=VARCHAR} , #{vipStatus,jdbcType=VARCHAR}
+      )
+    </insert>
+</mapper>

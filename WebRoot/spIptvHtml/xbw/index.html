@@ -1,0 +1,127 @@
+﻿<html lang = "zh">
+ <head>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <title>小霸王经典回忆</title>
+
+     <style type="text/css">
+
+       body{
+            float:left;
+            padding:0;
+            margin:0;
+            width: 100%; 
+           height: 100%;
+        }
+       #logo{
+           float:left;
+           width: 70%; 
+           height: 100%;
+           display:block;
+       }
+      #gamemenu{
+          overflow:auto;
+          float:right;
+          width:30%;
+          height:100%;
+          display:block;          
+          background:yellow;
+          text-align:center;
+      }
+      a:link {color:red;text-decoration:none;}
+      a:visited {color:blue;text-decoration:none}
+      a:hover {color: yellow;text-decoration:none}/* 鼠标移动到链接上 */
+      a:active {color: blue;text-decoration:none}/* 选定的链接 */
+     
+      </style>
+     <script type="text/javascript">
+       var theA=new Array(4); //两张图片，也可以是写成3，写成三就是3张图片
+       for(i=0,n=theA.length;i<n;i++)
+       {
+         theA[i]=new Image();
+         theA[i].src='images2/'+i+'.jpg';
+       }
+       var currentImage=1;
+       var run=true;
+       var speed=5000;   //这个是5秒中
+       function changeSize1()
+      { 
+        if(!document.images)
+        return;
+        if(!run)
+        return;
+        document.getElementById("myImage").src=theA[currentImage].src;
+        currentImage++;
+        if(currentImage>theA.length-1)
+         currentImage=0;
+        setTimeout('changeSize1()',speed);
+     }
+    
+    /*
+     function bigImg(name, width, src) {
+            document.getElementById(name).src = src;
+            document.getElementById(name).style.width = width;
+       }
+     function normalImg(name,width,src) {
+            document.getElementById(name).style.width = width;
+            document.getElementById(name).src = src;
+        }
+      */  
+      
+      function changecor(name,size,cor){
+            document.getElementById(name).style.fontSize = size;
+            document.getElementById(name).style.color = cor;
+      	
+      }
+     function startfocus() {
+            document.getElementById("g1").focus();
+     } 
+
+     function init(){
+        changeSize1();
+        startfocus();
+     }
+    </script>
+
+ </head>
+
+<!-- body onload="init()" --> 
+<body>
+   <div id="logo" >
+       <img id="myImage" src="images/0.jpg" alt="" width="100%" height="100%">
+   </div>
+   
+  <div id="gamemenu">
+       <h1 ><a id="g1" href="javascript:window.quelly.getAppClass('321');" onblur="changecor('g1','100%','red')" onfocus="changecor('g1','150%','blue')">1942</a></h1>
+       <h1 ><a id="g2" href="javascript:window.quelly.getAppClass('323');" onblur="changecor('g2','100%','red')" onfocus="changecor('g2','150%','blue')">北斗神拳</a></h1>
+       <h1 ><a id="g3" href="javascript:window.quelly.getAppClass('322');" onblur="changecor('g3','100%','red')" onfocus="changecor('g3','150%','blue')">半熟英雄</a></h1>
+       <h1 ><a id="g4" href="javascript:window.quelly.getAppClass('325');" onblur="changecor('g4','100%','red')" onfocus="changecor('g4','150%','blue')">赤车要塞</a></h1>
+       <h1 ><a id="g5" href="javascript:window.quelly.getAppClass('324');" onblur="changecor('g5','100%','red')" onfocus="changecor('g5','150%','blue')">成龙之龙</a></h1>
+       <h1 ><a id="g6" href="javascript:window.quelly.getAppClass('326');" onblur="changecor('g6','100%','red')" onfocus="changecor('g6','150%','blue')">赤影战士</a></h1>
+       <h1 ><a id="g7" href="javascript:window.quelly.getAppClass('328');" onblur="changecor('g7','100%','red')" onfocus="changecor('g7','150%','blue')">古巴战士</a></h1>
+       <h1 ><a id="g8" href="javascript:window.quelly.getAppClass('329');" onblur="changecor('g8','100%','red')" onfocus="changecor('g8','150%','blue')">怪鸭历险记</a></h1>
+       <h1 ><a id="g9" href="javascript:window.quelly.getAppClass('330');" onblur="changecor('g9','100%','red')" onfocus="changecor('g9','150%','blue')">魂斗罗</a></h1>
+       <h1 ><a id="g10" href="javascript:window.quelly.getAppClass('332');"onblur="changecor('g10','100%','red')" onfocus="changecor('g10','150%','blue')">洛克人</a></h1>
+       <h1 ><a id="g11" href="javascript:window.quelly.getAppClass('333');"onblur="changecor('g11','100%','red')" onfocus="changecor('g11','150%','blue')">绿色兵团</a></h1>
+       <h1 ><a id="g12" href="javascript:window.quelly.getAppClass('334');"onblur="changecor('g12','100%','red')" onfocus="changecor('g12','150%','blue')">冒险岛</a></h1>
+       <h1 ><a id="g13" href="javascript:window.quelly.getAppClass('335');"onblur="changecor('g13','100%','red')" onfocus="changecor('g13','150%','blue')">敲砖块</a></h1>
+       <h1 ><a id="g14" href="javascript:window.quelly.getAppClass('327');"onblur="changecor('g14','100%','red')" onfocus="changecor('g14','150%','blue')">俄罗斯方块</a></h1>
+       <h1 ><a id="g15" href="javascript:window.quelly.getAppClass('336');"onblur="changecor('g15','100%','red')" onfocus="changecor('g15','150%','blue')">热血格斗</a></h1>
+       <h1 ><a id="g16" href="javascript:window.quelly.getAppClass('338');"onblur="changecor('g16','100%','red')" onfocus="changecor('g16','150%','blue')">忍者神龟</a></h1>
+       <h1 ><a id="g17" href="javascript:window.quelly.getAppClass('341');"onblur="changecor('g17','100%','red')" onfocus="changecor('g17','150%','blue')">双截龙2</a></h1>
+       <h1 ><a id="g18" href="javascript:window.quelly.getAppClass('340');"onblur="changecor('g18','100%','red')" onfocus="changecor('g18','150%','blue')">沙罗曼蛇</a></h1>
+       <h1 ><a id="g19" href="javascript:window.quelly.getAppClass('339');"onblur="changecor('g19','100%','red')" onfocus="changecor('g19','150%','blue')">三目童子</a></h1>
+       <h1 ><a id="g20" href="javascript:window.quelly.getAppClass('342');"onblur="changecor('g20','100%','red')" onfocus="changecor('g20','150%','blue')">松鼠大战</a></h1>
+       <h1 ><a id="g21" href="javascript:window.quelly.getAppClass('343');"onblur="changecor('g21','100%','red')" onfocus="changecor('g21','150%','blue')">坦克大战</a></h1>
+       <h1 ><a id="g22" href="javascript:window.quelly.getAppClass('345');"onblur="changecor('g22','100%','red')" onfocus="changecor('g22','150%','blue')">脱越</a></h1>
+       <h1 ><a id="g23" href="javascript:window.quelly.getAppClass('346');"onblur="changecor('g23','100%','red')" onfocus="changecor('g23','150%','blue')">挖金子</a></h1>
+       <h1 ><a id="g24" href="javascript:window.quelly.getAppClass('347');"onblur="changecor('g24','100%','red')" onfocus="changecor('g24','150%','blue')">雪人兄弟</a></h1>
+       <h1 ><a id="g25" href="javascript:window.quelly.getAppClass('349');"onblur="changecor('g25','100%','red')" onfocus="changecor('g25','150%','blue')">越野机车</a></h1>
+       <h1 ><a id="g26" href="javascript:window.quelly.getAppClass('348');"onblur="changecor('g26','100%','red')" onfocus="changecor('g26','150%','blue')">影子传说</a></h1>
+       <h1 ><a id="g27" href="javascript:window.quelly.getAppClass('350');"onblur="changecor('g27','100%','red')" onfocus="changecor('g27','150%','blue')">炸弹人</a></h1>
+       <h1 ><a id="g28" href="javascript:window.quelly.getAppClass('331');"onblur="changecor('g28','100%','red')" onfocus="changecor('g28','150%','blue')">快打旋风</a></h1>
+       <h1 ><a id="g29" href="javascript:window.quelly.getAppClass('337');"onblur="changecor('g29','100%','red')" onfocus="changecor('g29','150%','blue')">忍者龙剑传3</a></h1>
+       <h1 ><a id="g30" href="javascript:window.quelly.getAppClass('344');"onblur="changecor('g30','100%','red')" onfocus="changecor('g30','150%','blue')">吞食天地</a></h1>
+      </div>
+  
+ </body>
+</html>

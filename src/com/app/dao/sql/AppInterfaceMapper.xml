@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.dao.AppInterfaceMapper">
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="appInterface">
+		insert into app_interface 
+			(transaction_id,sp_id,user_id,user_token,key,product_id,price,product_name,back_url,
+			notify_url,opt_flag,purchase_type,category_id,content_id,content_type,
+			result,result_desc,create_time,update_time) 
+		values 
+			(#{transactionId, jdbcType=VARCHAR}, #{spId, jdbcType=VARCHAR}, #{userId, jdbcType=VARCHAR}, #{userToken, jdbcType=VARCHAR}, #{key, jdbcType=VARCHAR}, #{productId, jdbcType=VARCHAR}, #{price, jdbcType=VARCHAR}, 
+				#{productName, jdbcType=VARCHAR}, #{backUrl, jdbcType=VARCHAR}, #{notifyUrl, jdbcType=VARCHAR}, #{optFlag, jdbcType=VARCHAR}, #{purchaseType, jdbcType=VARCHAR}, 
+				#{categoryId, jdbcType=VARCHAR}, #{contentId, jdbcType=VARCHAR}, #{contentType, jdbcType=VARCHAR}, #{result, jdbcType=VARCHAR}, #{resultDesc, jdbcType=VARCHAR},
+				<!-- #{createTime},#{updateTime}) -->
+		 		to_date(#{createTime},'yyyy-mm-dd hh24:mi:ss'), to_date(#{updateTime},'yyyy-mm-dd hh24:mi:ss'))
+		<!--<selectKey resultType="int" keyProperty="appId" order="BEFORE">
+			select seq_app_id.nextval from dual
+		</selectKey> -->
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="appInterface">
+		update app_interface set result= #{result, jdbcType=VARCHAR},
+		result_desc= #{resultDesc, jdbcType=VARCHAR},update_time = to_date(#{updateTime},'yyyy-mm-dd hh24:mi:ss')
+		where transaction_id = #{transactionId, jdbcType=VARCHAR}
+	</update>
+	
+	<!-- 根据名称查询 -->
+	<select id="selectByName" parameterType="String" resultType="appInterface">
+		select * from app_interface where msg_name = #{msgName, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectById" parameterType="String" resultType="appInterface">
+		select * from app_interface where transaction_id = #{transactionId, jdbcType=VARCHAR}
+	</select>
+	
+	
+	<!-- 分页查询 -->
+	<select id="selectPageList" parameterType="Map" resultType="appInterface">
+		select * from 
+			(select a.*, rownum rn from
+				(select b.* from app_interface b
+					<where>
+						<if test="msgName != null">b.result_desc like #{msgName} or b.transaction_id like #{msgName} or b.product_id like #{msgName} </if>
+					</where>
+					order by b.create_time desc) a
+			where rownum &lt;= #{endRow}) c
+		where c.rn &gt;= #{startRow}
+	</select>
+	
+	<!-- 分页查询总条数 -->
+	<select id="selectTotalRows" parameterType="Map" resultType="int">
+		select count(*) from app_interface
+		<where>
+			<if test="msgName != null">result_desc like #{msgName} or transaction_id like #{msgName} or product_id like #{msgName}</if>
+		</where>
+	</select>
+	
+	
+</mapper>

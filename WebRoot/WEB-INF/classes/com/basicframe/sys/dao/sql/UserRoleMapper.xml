@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.basicframe.sys.dao.UserRoleMapper">
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="userRole">
+		insert into sys_user_role (user_id, role_id) values (#{userId} ,#{roleId})
+	</insert>
+	
+	<!-- 根据角色ID删除 -->
+	<delete id="delete" parameterType="int">
+		delete from sys_user_role where role_id = #{roleId}
+	</delete>
+	
+	<!-- 根据管理员ID删除 -->
+	<delete id="deleteByUserId" parameterType="int">
+		delete from sys_user_role where user_id = #{userId}
+	</delete>
+	
+	<!-- 查询所有 -->
+	<select id="selectAll" resultType="userRole">
+		select * from sys_user_role
+	</select>
+	
+	<!-- 根据管理员ID查询 -->
+	<select id="selectById" parameterType="int" resultType="userRole">
+		select * from sys_user_role where user_id = #{userId}
+	</select>
+	
+	
+</mapper>

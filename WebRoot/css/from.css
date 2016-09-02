@@ -1,0 +1,39 @@
+/* form */
+input {margin: 0; vertical-align: middle; color: #114477; height: 20px;font-size: 14px;}
+input[type="text"],
+input[type="password"] { color: #336699; background:#F7FAFC; border: 1px solid #6688AA; border-color: #778899 #AABBCC #AABBCC #8899AA; padding:2px 2px 3px; +padding:2px;
+vertical-align:middle; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
+input.inputTextHover { border-color: #00ccff; }
+input[type="text"]:hover,
+input[type="password"]:hover { border-color: #00ccff; }
+input.inputTextFocus { border-color: #FF8800; background:#F7FAFC; }
+input[type="text"]:focus,
+input[type="password"]:focus { border-color: #FF8800; background:#F7FAFC; }
+input.disabled { border-color: #ccc; background:#f5f5f5 none; }
+input[type="text"][disabled] { border-color: #ccc; background:#f5f5f5 none; }
+
+select {vertical-align: middle; margin: 0; font-size: 14px;width: 125px;height: 23px; background-color: #FFFFFF;color: #336699; border: 1px solid #667788;}
+textarea { color: #336699; border: 1px solid #667788; border-color: #667788 #AABBCC #AABBCC #778899; line-height: 19px; padding: 1px 1px 1px 4px; background: #F7FAFC url(../images/system/textarea_bg.gif); margin: 0; -moz-border-radius: 2px; -webkit-border-radius: 2px; *overflow:scroll; *overflow-x: hidden;
+}
+textarea:hover { border-color: #00AAEE; }
+textarea:focus { border-color: #FF8800; }
+textarea.disabled,
+textarea.readonly { border-color:#ccc; background:#f5f5f5 none; *overflow:hidden;
+}
+textarea[disabled],
+textarea[readonly] { border-color:#ccc; background:#f5f5f5 none; }
+input.inputImage { padding: 0; margin: 0; border: none; }
+input[type="image"] { padding: 0; margin: 0; border: none; }
+input.inputFile {
+ *height:21px; background:#F7FAFC; border: 1px solid #667788; margin: 0; vertical-align:middle; }
+input[type="file"] {
+ *height:21px; background:#F7FAFC; border: 1px solid #667788; margin: 0; vertical-align:middle; }
+input.inputCheckbox { margin: -2px 0 -1px -2px; }
+input[type="checkbox"] { margin: 1px 3px 0 0; *margin: -2px 0 -1px -2px;
+}
+input.inputRadio { margin: -2px 0 -1px -2px; }
+input[type="radio"] { margin: 1px 3px 0 0; *margin: -2px 0 -1px -2px;
+}
+fieldset { padding:0.5em; border: 1px solid #CCCCCC; -moz-border-radius: 3px; }
+legend { color: #445566; font-weight: bold; padding: 1px 6px 2px 6px; *margin-left: -5px;
+-moz-border-radius: 3px; }

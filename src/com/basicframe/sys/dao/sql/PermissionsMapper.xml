@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.basicframe.sys.dao.PermissionsMapper">
+
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="permissions">
+		insert into sys_permissions (per_id, per_name, per_action, per_remark, menu_id)
+		values (#{perId}, #{perName}, #{perAction}, #{perRemark}, #{menuId})
+		<selectKey resultType="int" keyProperty="perId" order="BEFORE">
+			select seq_per_id.nextval from dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="permissions">
+		update sys_permissions set per_name = #{perName}, per_action = #{perAction}, per_remark = #{perRemark} where per_id = #{perId}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from sys_permissions where per_id = #{perId}
+	</delete>
+	
+	<!-- 查询所有 -->
+	<select id="selectAll" resultType="permissions">
+		select * from sys_permissions
+	</select>
+	
+	<!-- 根据ID查询 -->
+	<select id="selectById" parameterType="int" resultType="permissions">
+		select * from sys_permissions where per_id = #{perId}
+	</select>
+	
+	<!-- 查询用户权限 -->
+	<select id="selectUserPermissions" parameterType="int" resultType="permissions">
+		select * from sys_permissions where per_id in (select permissions_id from sys_role_permissions where role_id in 
+		(select role_id from sys_user_role where user_id = #{userId}))
+	</select>
+	
+	<!-- 根据菜单ID删除 -->
+	<delete id="deleteByMenuId" parameterType="int">
+		delete from sys_permissions where menu_id = #{menuId}
+	</delete>
+	
+	<!-- 分页查询 -->
+	<select id="selectPageList" parameterType="Map" resultType="permissions">
+		select * from
+				(select a.*,rownum rn from sys_permissions a
+					<where>
+						rownum &lt;= #{endRow}
+						<if test="menuId != null">
+							and a.menu_id = #{menuId}
+						</if>
+					</where>
+				) t
+		where t.rn &gt;= #{startRow}
+	</select>
+	
+	<!-- 分页查询总条数 -->
+	<select id="selectTotalRows" parameterType="Map" resultType="int">
+		select count(*) from sys_permissions
+		<where>
+			<if test="menuId != null">
+				menu_id = #{menuId}
+			</if>
+		</where>
+	</select>
+	
+</mapper>

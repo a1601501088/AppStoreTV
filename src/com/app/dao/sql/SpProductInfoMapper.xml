@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.dao.SpProductInfoMapper">
+    <resultMap id="BaseResultMap" type="com.app.model.SpProductInfo">
+        <result column="SP_PRODUCT_ID" property="spProductId" jdbcType="VARCHAR"/>
+        <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR"/>
+        <result column="SP_ID" property="spId" jdbcType="VARCHAR"/>
+        <result column="PAY_TYPE" property="payType" jdbcType="VARCHAR"/>
+        <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR"/>
+        <result column="PACKGE_ID" property="packgeId" jdbcType="VARCHAR"/>
+        <result column="APP_ID" property="appId" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.app.model.SpProductInfo">
+    insert into SP_PRODUCT_INFO (SP_PRODUCT_ID, PRODUCT_ID, SP_ID, 
+      PAY_TYPE, PRODUCT_NAME, PACKGE_ID, 
+      APP_ID, CREATE_TIME, REMARK
+      )
+    values (#{spProductId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{spId,jdbcType=VARCHAR}, 
+      #{payType,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{packgeId,jdbcType=VARCHAR}, 
+      #{appId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.app.model.SpProductInfo">
+        insert into SP_PRODUCT_INFO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spProductId != null">
+                SP_PRODUCT_ID,
+            </if>
+            <if test="productId != null">
+                PRODUCT_ID,
+            </if>
+            <if test="spId != null">
+                SP_ID,
+            </if>
+            <if test="payType != null">
+                PAY_TYPE,
+            </if>
+            <if test="productName != null">
+                PRODUCT_NAME,
+            </if>
+            <if test="packgeId != null">
+                PACKGE_ID,
+            </if>
+            <if test="appId != null">
+                APP_ID,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spProductId != null">
+                #{spProductId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="spId != null">
+                #{spId,jdbcType=VARCHAR},
+            </if>
+            <if test="payType != null">
+                #{payType,jdbcType=VARCHAR},
+            </if>
+            <if test="productName != null">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="packgeId != null">
+                #{packgeId,jdbcType=VARCHAR},
+            </if>
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="querySpProductInfo" parameterType="com.app.model.SpProductInfo" resultMap="BaseResultMap">
+        SELECT * FROM SP_PRODUCT_INFO WHERE
+        <if test="appId!=null and appId!=''">
+            APP_ID = #{appId}
+        </if>
+        and
+        <if test="packgeId!=null and packgeId!=''">
+            PACKGE_ID = #{packgeId}  and
+        </if>
+
+        SP_ID = #{spId}
+        and
+        PAY_TYPE = #{payType}
+    </select>
+</mapper>

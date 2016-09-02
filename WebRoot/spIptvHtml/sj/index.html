@@ -1,0 +1,110 @@
+﻿<!doctype html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>圣剑专题</title>
+    <style type="text/css">
+        .main
+        {
+            position: absolute;
+            width: 80%;
+            bottom: 4%;
+            left: 10%;
+            text-align: center;
+        }
+        .lr
+        {
+            width: 100%;
+        }
+        .showPic
+        {
+            margin: 0 5px;
+            width: 23%;
+        }
+    </style>
+    <script type="text/javascript">
+        function Scroll(direction) {
+            var current;
+            var count = document.getElementsByName("scroll").length;
+            for (i = 0; i < count; i++) {
+                var obj = document.getElementById(i);
+                if (obj.style.display == "block") {
+                    current = i;
+                }
+            }
+            if (direction == "left") {
+                if (current == 0) {
+                    current = count - 1;
+                }
+                else {
+                    current = current - 1;
+                }
+            }
+            if (direction == "right") {
+                if (current == count - 1) {
+                    current = 0;
+                }
+                else {
+                    current = current + 1;
+                }
+            }
+            for (i = 0; i < count; i++) {
+                if (i == current) {
+                    document.getElementById(i).style.display = "block";
+                }
+                else {
+                    document.getElementById(i).style.display = "none";
+                }
+            }
+        }
+
+        function bigImg(name, width, src) {
+            document.getElementById(name).src = src;
+            document.getElementById(name).style.width = width;
+            
+        }
+
+        function normalImg(name,width,src) {
+            document.getElementById(name).style.width = width;
+            document.getElementById(name).src = src;
+        }
+
+        window.onload = function () {
+            document.getElementById("aLeft").focus();
+        }
+    </script>
+</head>
+<body style="margin:0;padding:0;">
+    <div style="width:100%; height:100%;">
+        <img src="images/bg.jpg" alt="" width="100%" height="100%" style="float:left;"/>
+        <div class="main">
+            <div style="width: 8%; float:left;position:absolute;bottom:10%;">
+            <div style="position:relative;margin-bottom:100%">
+                <a id="aLeft" href="javascript:Scroll('left');" onblur="normalImg('left','100%','images/left1.png')" onfocus="bigImg('left','100%','images/left2.png')">
+                    <img id="left" src="images/left1.png" class="lr" alt="" /></a></div></div>
+            <div id="0" name="scroll" style="width: 82%; float: left; display: block;position:absolute;left:9%;bottom:0;">
+                <span ><a href="javascript:window.quelly.getAppClass('165');" onblur="normalImg('img1','23%','images/dtez1.jpg')" onfocus="bigImg('img1','24%','images/dtez2.jpg')">
+                    <img id="img1" src="images/dtez1.jpg" class="showPic" alt=""/></a> </span>
+                <span><a href="javascript:window.quelly.getAppClass('162');" onblur="normalImg('img2','23%','images/fnxn1.jpg')" onfocus="bigImg('img2','24%','images/fnxn2.jpg')">
+                    <img id="img2" src="images/fnxn1.jpg" class="showPic" alt=""/></a> </span>
+                <span><a href="javascript:window.quelly.getAppClass('163');"  onblur="normalImg('img3','23%','images/lkrz1.jpg')" onfocus="bigImg('img3','24%','images/lkrz2.jpg')">
+                     <img id="img3" src="images/lkrz1.jpg" class="showPic" alt="" /></a> </span>
+                 <span><a href="javascript:window.quelly.getAppClass('164');"  onblur="normalImg('img4','23%','images/seh1.jpg')" onfocus="bigImg('img4','24%','images/seh2.jpg')">
+                       <img id="img4" src="images/seh1.jpg" class="showPic" alt=""/></a> </span>
+            </div>
+            <div id="1" name="scroll"  style="width: 82%; float: left; display: none;position:absolute;left:9%;bottom:0;">
+                <span><a href="javascript:window.quelly.getAppClass('166');" onblur="normalImg('img5','23%','images/zltk1.jpg')" onfocus="bigImg('img5','24%','images/zltk2.jpg')">
+                    <img id="img5" src="images/zltk1.jpg" class="showPic" alt=""  /></a> </span>
+                    <span><a href="javascript:window.quelly.getAppClass('161');" onblur="normalImg('img6','23%','images/zzx1.jpg')" onfocus="bigImg('img6','24%','images/zzx2.jpg')">
+                        <img id="img6" src="images/zzx1.jpg" class="showPic" alt="" /></a> </span>
+                        <span><img src="images/blank.png" class="showPic" alt="" /></span> <span>
+                                <img src="images/blank.png" class="showPic" alt="" /></span>
+            </div>
+            <div style="width: 8%; float: left;position:absolute;bottom:10%;right:0;">
+            <div style="position:relative;margin-bottom:100%">
+                <a href="javascript:Scroll('right');" onblur="normalImg('right','100%','images/right1.png')" onfocus="bigImg('right','100%','images/right2.png')">
+                    <img id="right" src="images/right1.png" class="lr" alt="" /></a></div></div>
+        </div>
+    </div>
+</body>
+</html>

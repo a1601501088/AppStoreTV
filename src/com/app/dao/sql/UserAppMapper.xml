@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.dao.UserAppMapper">
+
+    <insert id="insert" parameterType="com.app.model.UserApp">
+    insert into USER_APP (USER_ID, USER_TOKEN, APP_NAME, 
+      FREE_TIME, APP_SURPLUS, APP_PURCHASE, 
+      APP_PURCASE_TIME, APP_FREE_TIME, APP_PACKGE, 
+      TERM,APP_ID)
+    values (#{userId,jdbcType=VARCHAR}, #{userToken,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, 
+      #{freeTime,jdbcType=VARCHAR}, #{appSurplus,jdbcType=VARCHAR}, #{appPurchase,jdbcType=VARCHAR}, 
+      #{appPurcaseTime,jdbcType=VARCHAR}, #{appFreeTime,jdbcType=VARCHAR}, #{appPackge,jdbcType=VARCHAR}, 
+      #{term,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR})
+  </insert>
+
+    <select id="selectByBean" parameterType="com.app.model.UserApp" resultType="com.app.model.UserApp">
+  				select * from USER_APP where USER_ID =#{userId,jdbcType=VARCHAR}  and  APP_NAME = #{appName,jdbcType=VARCHAR}
+  				 and APP_ID = #{appId,jdbcType=VARCHAR}
+   </select>
+
+
+
+    <update id="update" parameterType="com.app.model.UserApp">
+        update USER_APP
+        <set>
+
+            <if test="freeTime != null and freeTime!=''">
+                FREE_TIME = #{freeTime, jdbcType=INTEGER},
+            </if>
+            <if test="appName != null and appName!=''">
+                APP_NAME = #{appName, jdbcType=INTEGER},
+            </if>
+
+            <if test="appSurplus != null and appSurplus!=''">
+                APP_SURPLUS = #{appSurplus, jdbcType=INTEGER},
+            </if>
+            <if test="appPurchase != null and appPurchase!=''">
+                APP_PURCHASE = #{appPurchase, jdbcType=INTEGER},
+            </if>
+            <if test="appPurcaseTime != null and appPurcaseTime!=''">
+                APP_PURCASE_TIME = #{appPurcaseTime, jdbcType=INTEGER},
+            </if>
+            <if test="appFreeTime != null and appFreeTime!=''">
+                APP_FREE_TIME = #{appFreeTime, jdbcType=INTEGER},
+            </if>
+
+            <if test="appPackge != null and appPackge!=''">
+                APP_PACKGE = #{appPackge, jdbcType=INTEGER},
+            </if>
+
+            <if test="term != null and term!=''">
+                TERM = #{term, jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE USER_ID = #{userId}  AND APP_ID = #{appId}
+    </update>
+
+
+    <select id="queryAppByBean" parameterType="com.app.model.UserApp" resultType="com.app.model.UserApp">
+        SELECT  * FROM  user_app WHERE USER_ID = #{userId} AND APP_ID=#{appId}
+
+    </select>
+</mapper>

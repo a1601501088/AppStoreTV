@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.dao.CommendInfoMapper">
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="commendInfo">
+		insert into commend_info 
+			(commend_id, commend_type, commend_name, commend_url, commend_img, create_time) 
+		values 
+			(#{commendId}, #{commendType}, #{commendName}, #{commendUrl}, #{commendImg, jdbcType=VARCHAR}, #{createTime})
+		<selectKey resultType="int" keyProperty="commendId" order="BEFORE">
+			select seq_commend_id.nextval from dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="commendInfo">
+		update commend_info
+		<set >
+			<if test="commendType != null" >
+	        	commend_type = #{commendType, jdbcType=INTEGER},
+	      	</if>
+	      	<if test="commendName != null" >
+	        	commend_name = #{commendName, jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="commendUrl != null" >
+	        	commend_url = #{commendUrl, jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="commendImg != null" >
+	        	commend_img = #{commendImg, jdbcType=VARCHAR}
+	      	</if>
+		</set>
+		where commend_id = #{commendId, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from commend_info where commend_id = #{commendId, jdbcType=INTEGER}
+	</delete>
+	
+	<!-- 根据ID查询 -->
+	<select id="selectById" parameterType="int" resultType="commendInfo">
+		select * from commend_info where commend_id = #{commendId, jdbcType=INTEGER}
+	</select>
+	
+	<!-- 根据名称查询 -->
+	<select id="selectByName" parameterType="String" resultType="commendInfo">
+		select * from commend_info where commend_name = #{commendName, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 根据类型查询 -->
+	<select id="selectByType" parameterType="int" resultType="commendInfo">
+		select * from commend_info where commend_type = #{commendType, jdbcType=INTEGER}
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="selectPageList" parameterType="Map" resultType="commendInfo">
+		select * from 
+			(select a.*, rownum rn from
+				(select b.*, d.class_name from commend_info b, app_class d
+					<where>
+						b.commend_type = d.class_id
+						<if test="commendType != null">and b.commend_type like #{commendType}</if>
+						<if test="commendName != null">and b.commend_name like #{commendName}</if>
+					</where>
+					order by b.create_time desc) a
+			where rownum &lt;= #{endRow}) c
+		where c.rn &gt;= #{startRow}
+	</select>
+	
+	<!-- 分页查询总条数 -->
+	<select id="selectTotalRows" parameterType="Map" resultType="int">
+		select count(*) from commend_info
+		<where>
+			<if test="commendType != null">commend_type = #{commendType}</if>
+			<if test="commendName != null">commend_name like #{commendName}</if>
+		</where>
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="selectAll" parameterType="Map" resultType="commendInfo">
+		select a.commend_id, a.commend_type, c.app_name commend_name, a.commend_url, a.commend_img, a.create_time, b.class_name  
+		from commend_info a, app_class b, app_info c
+		<where>
+			a.commend_type = b.class_id 
+			and a.commend_url = c.app_id
+			<if test="commendType != null">and commend_type = #{commendType}</if>
+			<if test="commendName != null">and commend_name like #{commendName}</if>
+		</where>
+	</select>
+	
+</mapper>

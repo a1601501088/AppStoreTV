@@ -1,0 +1,52 @@
+@charset "UTF-8";
+html, body, h1, h2, h3, h4, h5, h6, div, img, a, a img {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    /* line-height: 1.6; */
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none;
+    display: inline-block;
+    line-height: 0;
+}
+
+@media screen and (max-width: 1000px) {
+    html {
+        font-size: 13px;
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1300px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 2000px) {
+    html {
+        font-size: 24px;
+    }
+}
+
+@media screen and (min-width: 2000px) and (max-width: 3000px) {
+    html {
+        font-size: 24px;
+    }
+}
+
+@media screen and (min-width: 3000px) and (max-width: 4000px) {
+    html {
+        font-size: 24px;
+    }
+}
+
+body {
+    font-family: 'Microsoft YaHei',Tahoma, Arial, Roboto, ”Droid Sans”, ”Helvetica Neue”, ”Droid Sans Fallback”, ”Heiti SC”, sans-self, serif;
+}

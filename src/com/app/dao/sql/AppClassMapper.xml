@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.dao.AppClassMapper">
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="appClass">
+		insert into app_class 
+			(class_id, class_name, class_order, create_time) 
+		values 
+			(#{classId}, #{className}, #{classOrder}, #{createTime})
+		<selectKey resultType="int" keyProperty="classId" order="BEFORE">
+			select seq_class_id.nextval from dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="appClass">
+		update app_class
+		<set >
+			<if test="className != null" >
+	        	class_name = #{className, jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="classOrder != null" >
+	        	class_order = #{classOrder, jdbcType=INTEGER},
+	      	</if>
+		</set>
+		where class_id = #{classId, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from app_class where class_id = #{classId, jdbcType=INTEGER}
+	</delete>
+	
+	<!-- 根据ID查询 -->
+	<select id="selectById" parameterType="int" resultType="appClass">
+		select * from app_class where class_id = #{classId, jdbcType=INTEGER}
+	</select>
+	
+	<!-- 根据名称查询 -->
+	<select id="selectByName" parameterType="String" resultType="appClass">
+		select * from app_class where class_name = #{className, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="selectPageList" parameterType="Map" resultType="appClass">
+		select * from 
+			(select a.*, rownum rn from				
+				
+				(select b.* from app_class b
+					<where>
+						<if test="className != null">b.class_name like #{className}</if>
+					</where>
+					order by b.create_time desc) a
+					
+			where rownum &lt;= #{endRow}) c
+		where c.rn &gt;= #{startRow}
+	</select>
+	
+	<!-- 分页查询总条数 -->
+	<select id="selectTotalRows" parameterType="Map" resultType="int">
+		select count(*) from app_class
+		<where>
+			<if test="className != null">class_name like #{className}</if>
+		</where>
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="selectAll" resultType="appClass">
+		select * from app_class order by class_order desc
+	</select>
+	
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.dao.UserPayMapper">
+
+	<insert id="insert" parameterType="com.app.model.UserPay" >
+		insert into USER_PAY (USER_ID, USER_TOKEN, PAY_NAME,
+		PAY_TIME,
+		PAY_PICE, PAY_TYPE,Share_type,Expire_time,Pay_pat,commodity,pay_id,pay_status
+		)
+		values (#{userId,jdbcType=VARCHAR}, #{userToken,jdbcType=VARCHAR},
+		#{payName,jdbcType=VARCHAR},
+		#{payTime,jdbcType=VARCHAR},
+		#{payPice,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR},
+		#{shareType,jdbcType=VARCHAR}, #{expireTime,jdbcType=VARCHAR},
+		#{payPat,jdbcType=VARCHAR},
+		#{commodity,jdbcType=VARCHAR},#{payId,jdbcType=VARCHAR},#{payStatus,jdbcType=VARCHAR}
+		)
+		<selectKey resultType="String" keyProperty="payId" order="BEFORE">
+			select to_char(sysdate,'yyyyMMddhh24miss')||to_char(SEQ_USER_PAY.nextval,'fm0000')
+			from  dual
+		</selectKey>
+	</insert>
+
+	<insert id="create2" parameterType="com.app.model.UserPay" >
+		insert into USER_PAY (USER_ID, USER_TOKEN, PAY_NAME,
+		PAY_TIME,
+		PAY_PICE, PAY_TYPE,Share_type,Expire_time,Pay_pat,commodity,pay_id,pay_status
+		)
+		values (#{userId,jdbcType=VARCHAR}, #{userToken,jdbcType=VARCHAR},
+		#{payName,jdbcType=VARCHAR},
+		to_char( SYSDATE,'YYYY-MM-DD HH24:MI:SS'),
+		#{payPice,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR},
+		#{shareType,jdbcType=VARCHAR}, #{expireTime,jdbcType=VARCHAR},
+		#{payPat,jdbcType=VARCHAR},
+		#{commodity,jdbcType=VARCHAR},#{payId,jdbcType=VARCHAR},#{payStatus,jdbcType=VARCHAR}
+		)
+		<selectKey resultType="java.lang.String" keyProperty="payId" order="BEFORE" >
+			select to_char(sysdate,'yyyyMMddhh24miss')||to_char(SEQ_USER_PAY.nextval,'fm0000')
+			from  dual
+		</selectKey>
+	</insert>
+
+	<select id="selectByUser" parameterType="com.app.model.UserPay"
+		resultType="com.app.model.UserPay">
+					select  *  from  user_pay  where user_id = #{userId,jdbcType=VARCHAR} 
+					and Share_type = #{shareType,jdbcType=VARCHAR}
+	</select>
+<!-- 通过userId查询最近一条记录 -->
+	<select id="queryLatelyByUserId" parameterType="java.lang.String" resultType="com.app.model.UserPay">
+		SELECT * FROM USER_PAY WHERE  PAY_ID = (SELECT max(PAY_ID) FROM user_pay WHERE USER_ID = #{userId})
+	</select>
+
+	<update id="update" parameterType="com.app.model.UserPay">
+		UPDATE USER_PAY
+		<set>
+			<if test="userId!=null and userId!=''">
+				USER_ID = #{userId},
+			</if>
+			<if test="userToken!=null and userToken!=''">
+				USER_TOKEN = #{userToken},
+			</if>
+			<if test="payName!=null and payName!=''">
+				PAY_NAME = #{payName},
+			</if>
+			<if test="payTime!=null and payTime!=''">
+				PAY_TIME = #{payTime},
+			</if>
+			<if test="payPice!=null and payPice!=''">
+				PAY_PICE = #{payPice},
+			</if>
+			<if test="payType!=null and payType!=''">
+				PAY_TYPE = #{payType},
+			</if>
+			<if test="shareType!=null and shareType!=''">
+				SHARE_TYPE = #{shareType},
+			</if>
+			<if test="expireTime!=null and expireTime!=''">
+				EXPIRE_TIME = #{expireTime},
+			</if>
+			<if test="payPat!=null and payPat!=''">
+				PAY_PAT = #{payPat},
+			</if>
+			<if test="commodity!=null and commodity!=''">
+				COMMODITY = #{commodity}
+			</if>
+		</set>
+		WHERE PAY_ID = #{payId}
+	</update>
+
+	<!-- 分页查询 -->
+	<select id="selectPageList" parameterType="Map" resultType="com.app.model.UserPay">
+		select * from
+		(select a.*, rownum rn from
+
+		(select b.* from user_pay b
+		<where>
+			<if test="userId != null">b.user_id like #{userId}</if>
+		</where>
+		order by b.pay_time desc) a
+
+		where rownum &lt;= #{endRow}) c
+		where c.rn &gt;= #{startRow}
+	</select>
+
+	<!-- 分页查询总条数 -->
+	<select id="selectTotalRows" parameterType="Map" resultType="int">
+		select count(*) from user_pay
+		<where>
+			<if test="userId != null">user_id like #{userId}</if>
+		</where>
+	</select>
+</mapper>

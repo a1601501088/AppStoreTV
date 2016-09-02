@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.dao.AppPackgeMapper">
+    <!-- 插入-->
+    <insert id="insert" parameterType="com.app.model.PackgeInfo">
+        INSERT into packge_info (PACKGE_INFO.PACKGE_ID,
+        PACKGE_INFO.PACKGE_TYPE,
+        PACKGE_INFO.PACKGE_CRITME,
+        PACKGE_INFO.PACKGE_URL,
+        PACKGE_INFO.PACKGE_NAME,
+        PACKGE_INFO.PACKGE_ORDE,
+        PACKGE_INFO.PACKGE_TERM,
+        PACKGE_INFO.PACKGE_STATUS,
+        PACKGE_INFO.PACKGE_PRICE,
+        PACKGE_INFO.PACKGE_PACE)
+        values(#{packgeId, jdbcType=VARCHAR},
+        #{packgeType, jdbcType=VARCHAR},
+        #{packgeCritme, jdbcType=VARCHAR},
+        #{packgeUrl, jdbcType=VARCHAR},
+        #{packgeName, jdbcType=VARCHAR},
+        #{packgeOrde, jdbcType=VARCHAR},
+        #{packgeTerm, jdbcType=VARCHAR},
+        #{packgeStatus, jdbcType=VARCHAR},
+        #{packgePrice, jdbcType=VARCHAR},
+        #{packgePace, jdbcType=VARCHAR})
+        <selectKey resultType="int" keyProperty="packgeId" order="BEFORE">
+            select seq_packge_id.nextval from dual
+        </selectKey>
+    </insert>
+    <!-- 更新 -->
+    <update id="update" parameterType="com.app.model.PackgeInfo">
+        update packge_info
+        <set >
+            <if test="packgeType != null and packgeType != ''" >
+                PACKGE_TYPE = #{appName, jdbcType=VARCHAR},
+            </if>
+            <if test="packgeCritme != null and packgeCritme != ''" >
+                PACKGE_CRITME = #{packgeCritme, jdbcType=VARCHAR},
+            </if>
+            <if test="packgeUrl != null and packgeUrl != ''" >
+                PACKGE_URL = #{packgeUrl, jdbcType=VARCHAR},
+            </if>
+            <if test="packgeName != null and packgeName != ''" >
+                app_version = #{appVersion, jdbcType=VARCHAR},
+            </if>
+            <if test="packgeOrde != null and packgeOrde != ''" >
+                PACKGE_ORDE = #{packgeOrde, jdbcType=VARCHAR},
+            </if>
+            <if test="packgeTerm != null  and packgeTerm != ''" >
+                PACKGE_TERM = #{packgeTerm, jdbcType=VARCHAR},
+            </if>
+            <if test="packgeStatus != null and packgeStatus != ''" >
+                PACKGE_STATUS = #{packgeStatus, jdbcType=VARCHAR},
+            </if>
+            <if test="packgePrice != null and packgePrice != ''" >
+                PACKGE_PRICE = #{packgePrice, jdbcType=VARCHAR},
+            </if>
+            <if test="packgePace != null and packgePace != ''" >
+                PACKGE_PACE = #{packgePace, jdbcType=VARCHAR},
+            </if>
+        </set>
+        where PACKGE_ID = #{packgeId, jdbcType=VARCHAR}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="int">
+        delete from packge_info where PACKGE_ID = #{packgeId, jdbcType=VARCHAR}
+    </delete>
+
+    <!-- 查询所有-->
+    <select id="selectAll">
+
+
+    </select>
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" parameterType="int" resultType="com.app.model.PackgeInfo">
+        select * from packge_info where PACKGE_ID = #{packgeId, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 根据名称查询 -->
+    <select id="selectByName" parameterType="String" resultType="com.app.model.PackgeInfo">
+        select * from packge_info where PACKGE_NAME = #{packgeName, jdbcType=VARCHAR}
+    </select>
+
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" parameterType="Map" resultType="com.app.model.PackgeInfo">
+        SELECT d.* FROM
+        (SELECT b.* , rownum rn FROM
+        (SELECT a.* FROM packge_info a ORDER by a.PACKGE_CRITME DESC) b
+        WHERE rownum &lt;= #{endRow}) d
+        WHERE d.rn &gt;= #{startRow}
+    </select>
+    <!-- 分页查询总条数 -->
+    <select id="selectTotalRows" parameterType="Map" resultType="int">
+        select count(*) from packge_info
+    </select>
+
+
+
+
+    <select id="selectByAppId" parameterType="String" resultType="com.app.model.PackgeInfo">
+	select * from packge_info  where PACKGE_NAME =
+	(select PACKGE from APP_INFO where app_id=#{appId})
+	</select>
+
+
+</mapper>

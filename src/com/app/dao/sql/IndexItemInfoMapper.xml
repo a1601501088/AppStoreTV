@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.dao.IndexItemInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.app.model.IndexItemInfo" >
+    <result column="INDEX_ITEM_ID" property="indexItemId" jdbcType="DECIMAL" />
+    <result column="INDEX_ITEM_NAME" property="indexItemName" jdbcType="VARCHAR" />
+    <result column="STAUTS" property="stauts" jdbcType="VARCHAR" />
+    <result column="IMAGE_URL" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="EXECTE_PACKGE" property="exectePackge" jdbcType="VARCHAR" />
+    <result column="EXECTE_ACTIVITY" property="execteActivity" jdbcType="VARCHAR" />
+    <result column="EXECTE_PARA" property="exectePara" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.app.model.IndexItemInfo" >
+    insert into INDEX_ITEM_INFO (INDEX_ITEM_ID, INDEX_ITEM_NAME, STAUTS, 
+      IMAGE_URL, EXECTE_PACKGE, EXECTE_ACTIVITY, 
+      EXECTE_PARA)
+    values (#{indexItemId,jdbcType=DECIMAL}, #{indexItemName,jdbcType=VARCHAR}, #{stauts,jdbcType=VARCHAR}, 
+      #{imageUrl,jdbcType=VARCHAR}, #{exectePackge,jdbcType=VARCHAR}, #{execteActivity,jdbcType=VARCHAR}, 
+      #{exectePara,jdbcType=VARCHAR})
+    <selectKey resultType="int" keyProperty="indexItemId" order="BEFORE">
+      select seq_indexItem_id.nextval from dual
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.app.model.IndexItemInfo" >
+    insert into INDEX_ITEM_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="indexItemId != null" >
+        INDEX_ITEM_ID,
+      </if>
+      <if test="indexItemName != null" >
+        INDEX_ITEM_NAME,
+      </if>
+      <if test="stauts != null" >
+        STAUTS,
+      </if>
+      <if test="imageUrl != null" >
+        IMAGE_URL,
+      </if>
+      <if test="exectePackge != null" >
+        EXECTE_PACKGE,
+      </if>
+      <if test="execteActivity != null" >
+        EXECTE_ACTIVITY,
+      </if>
+      <if test="exectePara != null" >
+        EXECTE_PARA,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="indexItemId != null" >
+        #{indexItemId,jdbcType=DECIMAL},
+      </if>
+      <if test="indexItemName != null" >
+        #{indexItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="stauts != null" >
+        #{stauts,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="exectePackge != null" >
+        #{exectePackge,jdbcType=VARCHAR},
+      </if>
+      <if test="execteActivity != null" >
+        #{execteActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="exectePara != null" >
+        #{exectePara,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="queryAllItem" resultType="com.app.model.IndexItemInfo">
+    SELECT * FROM INDEX_ITEM_INFO WHERE stauts = '1'
+  </select>
+
+
+  <!-- 分页查询 -->
+  <select id="selectPageList" parameterType="Map" resultType="com.app.model.IndexItemInfo">
+    select * from
+    (select a.*, rownum rn from
+
+    (select b.* from index_item_info b
+    <where>
+      <if test="indexItemName != null">b.index_item_name like #{indexItemName}</if>
+    </where>
+    order by index_item_id DESC ) a
+
+    where rownum &lt;= #{endRow}) c
+    where c.rn &gt;= #{startRow}
+  </select>
+
+  <!-- 分页查询总条数 -->
+  <select id="selectTotalRows" parameterType="Map" resultType="int">
+    select count(*) from index_item_info
+    <where>
+      <if test="indexItemName != null">index_item_name like #{indexItemName}</if>
+    </where>
+  </select>
+  <!-- 根据ID查询 -->
+  <select id="selectById" parameterType="int" resultType="com.app.model.IndexItemInfo">
+    select * from index_item_info where index_item_id = #{indexItemId, jdbcType=INTEGER}
+  </select>
+  <update id="update" parameterType="com.app.model.IndexItemInfo">
+    UPDATE index_item_info
+    <set>
+      <if test="indexItemId!=null and indexItemId!=''">
+        index_item_id = #{indexItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="indexItemName!=null and indexItemName!=''">
+        index_item_name = #{indexItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="stauts!=null and stauts!=''">
+        stauts = #{stauts,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl!=null and imageUrl!=''">
+        image_Url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="exectePackge!=null and exectePackge!=''">
+        execte_Packge = #{exectePackge,jdbcType=VARCHAR},
+      </if>
+      <if test="execteActivity!=null and execteActivity!=''">
+        execte_Activity = #{execteActivity,jdbcType=VARCHAR},
+      </if>
+
+      <if test="exectePara!=null and exectePara!=''">
+        execte_Para = #{exectePara,jdbcType=VARCHAR},
+      </if>
+    </set>
+
+    WHERE index_item_id = #{oldIndexId,jdbcType=INTEGER}
+  </update>
+
+  <!-- 删除 -->
+  <delete id="delete" parameterType="int">
+    delete from index_item_info where index_item_id = #{indexItemId, jdbcType=INTEGER}
+  </delete>
+</mapper>

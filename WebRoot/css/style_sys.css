@@ -1,0 +1,123 @@
+html,body { scrollbar-face-color: #DDEEFF; scrollbar-highlight-color: #FFFFFF; scrollbar-shadow-color: #99BBCC; scrollbar-3dlight-color: #AACCDD;
+scrollbar-arrow-color: #6688AA; scrollbar-track-color: #EEEEEE; scrollbar-darkshadow-color: #DDEEFF; }
+html { height:100%; }
+body { background-color: #FFFFFF; color: #444444; height:100%; margin:0; padding:0; }
+a { color: #08d; text-decoration: none; border: 0; background-color: transparent; }
+a:hover { color: #f80; text-decoration: underline; }
+a:active,
+a:focus { color: #f60; text-decoration: none; }
+a.selected { background: #2266BB; color: #CCFFFF; text-decoration: none; }
+a[href^="#"]:focus, a[href^="javascript"]:focus {outline:0;-moz-outline-style: none;}
+div,blockquote,q,iframe,form,ul,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,p { margin: 0; padding: 0; }
+ul,dl,li { list-style: none; }
+a img { border: none 0; vertical-align: middle; }
+img{-ms-interpolation-mode: bicubic;}
+body,td,textarea { line-height: 1.4; }
+textareap,p { word-break: break-all; word-wrap: break-word; }
+body,input,textarea,select,button { margin: 0; font-size: 12px; font-family: Tahoma, SimSun, sans-serif; }
+li { font-family: SimSun, Tahoma, sans-serif; }
+div,p,table,th,td,font { font-size: 1em; font-family: inherit; line-height: inherit; }
+em,i,u,q,s,dl,caption,dfn,var,address,cite,s,strike,ins { font-style: normal; font-weight: normal; text-decoration: none; }
+iframe { border-style: solid; border-color: #778899; border-width: 0; }
+form { display: inline; }
+h1 { font-size: 24px; font-family:SIMHEI, sans-serif; font-weight: normal; }
+h2 { font-size: 20px; font-family:SIMHEI, sans-serif; font-weight: normal; }
+h3 { font-size: 16px; font-family:Arial, sans-serif; font-weight: bold; }
+h4 { font-size: 14px; font-family:Arial, sans-serif; font-weight: bold; }
+h5 { font-size: 13px; font-family:SIMSUN, sans-serif; font-weight: bold; }
+h6 { font-size: 12px; font-family:SIMSUN, sans-serif; font-weight: bold; }
+q:before,
+q:after,
+blockquote:before,
+blockquote:after { content: ""; content: none; }
+blockquote,
+q { quotes: "" ""; }
+caption { text-align: left; }
+hr { clear:both; margin:7px 0; +margin: 0;
+border:0 none; font-size: 1px; line-height:1px; color: #ddd; background-color:#ddd; height: 1px; }
+label { margin-right:0.5em; white-space:nowrap; }
+em { color:#336699 }
+i { color:#669900 }
+pre,
+code { font-family: monospace; }
+
+/**常用颜色**/
+.red{color:#FC0008}
+.lightred{color:#FD545A}
+.deepred{color:#A80005}
+.green{color:#14AD00}
+.lightgreen{color:#81D246}
+.deepgreen{color:#0D7300}
+.blue{color:#003BAD}
+.lightblue{color:#448ECC}
+.deepblue{color:#002773}
+.yellow{color:#FFC500}
+.lightyellow{color:#FFEB55}
+.deepyellow{color:#AA8300}
+.black {color:#000000}
+
+/*Bugfix: 一些bug的修正 */
+* html textarea { overflow:scroll; overflow-x: hidden; }/*使多行文本框不显示默认的竖向滚动条*/
+* html iframe,
+* html frame { overflow:auto; }/*使浮动窗口不显示默认的竖向滚动条*/
+
+/* head欢迎信息 */
+.bluebg td,
+.bluebg div { color: #EEEEEE; }
+.bluebg a { color: #FFFF99; text-decoration: none; border: 0; }
+.bluebg a:hover { color: #FFEE66; text-decoration: underline; }
+.bluebg a:active { color: #CCFFFF; text-decoration: none; background: #3377BB; }
+
+/* 表头 */
+.blockTable { border: #BBBBBB 0px solid; background: url(../images/system/tableBg_left.gif) no-repeat left top; }
+.blockTd { background: url(../images/system/tableBg_right.gif) no-repeat right top; }
+.blockTd img { vertical-align:middle; }
+
+/* 表格 */
+table { border-collapse: collapse; }
+table.cellspacing { border-collapse: separate; }
+table.dataTable { border: 1px solid #C6C6C6; border-collapse: collapse; background: url(../images/system/thbg.gif) #FFFFFF repeat-x left top;
+table-layout: fixed; }
+table.dataTable td,
+table.dataTable th { color: #555555; border-bottom: 1px solid #DDDDDD; border-right: none 0; line-height:16px; +line-height:18px;
+padding: 3px 7px 3px 6px; +padding: 2px 7px 2px 6px; white-space: nowrap; }
+table.dataTable td { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; -o-text-overflow: ellipsis; height: 21px;}
+table.dataTable .wrap { white-space:normal; }
+table.dataTable tr.dataTableHead td,
+table.dataTable tr.dataTableHead td span { color: #445055; font-weight: bold; }
+table.dataTable tr.dataTableHead td { height: 27px; line-height:27px; padding: 0 7px 0 6px; border-left: #D6D6D6 0px solid;
+border-bottom: #C6C6C6 0px solid; background: url(../images/system/th.gif) no-repeat left top; }
+table.dataTable tr.dataTableHead td.thOver { background: url(../images/system/thbg_over.gif) no-repeat left top; }
+table.dataTable tr.dataTableHead:first-child { background-image: none; }
+
+/* form */
+input { margin: 0; vertical-align: middle; color: #114477; }
+
+input[type="text"],
+input[type="password"] { color: #336699; background: url(../images/system/text_bg.gif) #F7FAFC repeat-x left top; border: 1px solid #6688AA;
+border-color: #778899 #AABBCC #AABBCC #8899AA; padding:2px 2px 3px; +padding:2px;
+vertical-align:middle; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
+
+input[type="text"]:hover,
+input[type="password"]:hover { border-color: #00ccff; }
+
+input[type="text"]:focus,
+input[type="password"]:focus { border-color: #FF8800; background:#F7FAFC url(../images/system/text_bg.gif) repeat-x left top; }
+input.disabled { border-color: #ccc; background:#f5f5f5 none; }
+input[type="text"][disabled] { border-color: #ccc; background:#f5f5f5 none; }
+
+select { color: #336699; border: 1px solid #667788; vertical-align: middle; margin: 0; background-color: #FFFFFF; }
+option { color: #336699; }
+
+textarea { color: #336699; border: 1px solid #667788; border-color: #667788 #AABBCC #AABBCC #778899; line-height: 19px; padding: 1px 1px 1px 4px;
+background: #F7FAFC url(../images/system/textarea_bg.gif); height: 80px; margin: 0; -moz-border-radius: 2px; -webkit-border-radius: 2px;
+*overflow:scroll; *overflow-x: hidden;
+}
+textarea:hover { border-color: #00AAEE; }
+textarea:focus { border-color: #FF8800; }
+textarea.disabled,
+textarea.readonly { border-color:#ccc; background:#f5f5f5 none; *overflow:hidden;}
+
+fieldset { padding:0.5em; border: 1px solid #CCCCCC; -moz-border-radius: 3px; }
+legend { color: #445566; font-weight: bold; padding: 1px 6px 2px 6px; *margin-left: -5px; -moz-border-radius: 3px; }
+.button{ height: 26px; }

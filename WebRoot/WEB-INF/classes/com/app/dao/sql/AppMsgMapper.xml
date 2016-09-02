@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.dao.AppMsgMapper">
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="appMsg">
+		insert into app_msg 
+			(msg_id, msg_name, create_time) 
+		values 
+			(#{msgId}, #{msgName}, #{createTime})
+		<selectKey resultType="int" keyProperty="msgId" order="BEFORE">
+			select seq_msg_id.nextval from dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="appMsg">
+		update app_msg
+		<set >
+			<if test="msgName != null" >
+	        	msg_name = #{msgName, jdbcType=VARCHAR},
+	      	</if>
+		</set>
+		where msg_id = #{msgId, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from app_msg where msg_id = #{msgId, jdbcType=INTEGER}
+	</delete>
+	
+	<!-- 根据ID查询 -->
+	<select id="selectById" parameterType="int" resultType="appMsg">
+		select * from app_msg where msg_id = #{msgId, jdbcType=INTEGER}
+	</select>
+	
+	<!-- 根据名称查询 -->
+	<select id="selectByName" parameterType="String" resultType="appMsg">
+		select * from app_msg where msg_name = #{msgName, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="selectPageList" parameterType="Map" resultType="appMsg">
+		select * from 
+			(select a.*, rownum rn from
+				(select b.* from app_msg b
+					<where>
+						<if test="msgName != null">b.msg_name like #{msgName}</if>
+					</where>
+					order by b.create_time desc) a
+			where rownum &lt;= #{endRow}) c
+		where c.rn &gt;= #{startRow}
+	</select>
+	
+	<!-- 分页查询总条数 -->
+	<select id="selectTotalRows" parameterType="Map" resultType="int">
+		select count(*) from app_msg
+		<where>
+			<if test="msgName != null">msg_name like #{msgName}</if>
+		</where>
+	</select>
+	
+</mapper>

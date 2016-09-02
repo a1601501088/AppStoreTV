@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.dao.PackgeInfoMapper">
+    <resultMap id="BaseResultMap" type="com.app.model.PackgeInfo">
+        <result column="PACKGE_ID" property="packgeId" jdbcType="VARCHAR"/>
+        <result column="PACKGE_TYPE" property="packgeType" jdbcType="VARCHAR"/>
+        <result column="PACKGE_CRITME" property="packgeCritme" jdbcType="VARCHAR"/>
+        <result column="PACKGE_URL" property="packgeUrl" jdbcType="VARCHAR"/>
+        <result column="PACKGE_NAME" property="packgeName" jdbcType="VARCHAR"/>
+        <result column="PACKGE_ORDE" property="packgeOrde" jdbcType="VARCHAR"/>
+        <result column="PACKGE_TERM" property="packgeTerm" jdbcType="VARCHAR"/>
+        <result column="PACKGE_STATUS" property="packgeStatus" jdbcType="VARCHAR"/>
+        <result column="PACKGE_PRICE" property="packgePrice" jdbcType="VARCHAR"/>
+        <result column="PACKGE_PACE" property="packgePace" jdbcType="VARCHAR"/>
+        <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR"/>
+        <result column="SP_ID" property="spId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.app.model.PackgeInfo">
+        insert into PACKGE_INFO (PACKGE_ID, PACKGE_TYPE, PACKGE_CRITME,
+        PACKGE_URL, PACKGE_NAME, PACKGE_ORDE,
+        PACKGE_TERM, PACKGE_STATUS, PACKGE_PRICE,PACKGE_PACE,PRODUCT_ID,SP_ID
+        )
+        values (#{packgeId,jdbcType=VARCHAR}, #{packgeType,jdbcType=VARCHAR}, to_char(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),
+        #{packgeUrl,jdbcType=VARCHAR}, #{packgeName,jdbcType=VARCHAR}, #{packgeOrde,jdbcType=VARCHAR},
+        #{packgeTerm,jdbcType=VARCHAR}, #{packgeStatus,jdbcType=VARCHAR}, #{packgePrice,jdbcType=VARCHAR},
+        #{packgePace,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{spId,jdbcType=VARCHAR}
+        )
+
+        <selectKey resultType="java.lang.String" keyProperty="packgeId" order="BEFORE">
+            select SEQ_PACKGE_INFO.nextval from dual
+        </selectKey>
+    </insert>
+
+
+    <!-- 查询所有数据 -->
+    <resultMap type="com.app.model.PackgeInfo" id="userResultMap3" extends="BaseResultMap">
+        <collection property="appInfos" javaType="list" ofType="com.app.model.AppInfo">
+            <result column="app_id" property="appId"/>
+            <result column="class_id" property="classId"/>
+            <result column="app_name" property="appName"/>
+            <result column="app_short_name" property="appShortName"/>
+            <result column="app_icon" property="appIcon"/>
+            <result column="app_version" property="appVersion"/>
+            <result column="app_url" property="appUrl"/>
+            <result column="app_img" property="appImg"/>
+            <result column="app_desc" property="appDesc"/>
+            <result column="app_size" property="appSize"/>
+            <result column="app_count" property="appCount"/>
+            <result column="app_level" property="appLevel"/>
+            <result column="create_time" property="createTime"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="json_data" property="jsonData"/>
+            <result column="provider" property="provider"/>
+            <result column="price" property="price"/>
+            <result column="free_frequency" property="freeFrequency"/>
+            <result column="charge_type" property="chargeType"/>
+            <result column="packge" property="packge"/>
+            <result column="free_time" property="freeTime"/>
+
+        </collection>
+    </resultMap>
+    <select id="selectAll" resultMap="userResultMap3">
+            SELECT
+            PACKGE_INFO.PACKGE_ID,
+            PACKGE_INFO.PACKGE_TYPE,
+           PACKGE_INFO.PACKGE_CRITME,
+            PACKGE_INFO.PACKGE_URL,
+            PACKGE_INFO.PACKGE_NAME,
+            PACKGE_INFO.PACKGE_ORDE,
+            PACKGE_INFO.PACKGE_TERM,
+            PACKGE_INFO.PACKGE_STATUS,
+            PACKGE_INFO.PACKGE_PRICE,
+            PACKGE_INFO.PACKGE_PACE,
+            PACKGE_INFO.PRODUCT_ID,
+            PACKGE_INFO.SP_ID,
+            APP_INFO.APP_ID app_id,
+            APP_INFO.CLASS_ID class_id,
+            APP_INFO.APP_NAME app_name,
+            APP_INFO.APP_SHORT_NAME app_short_name,
+            APP_INFO.APP_ICON app_icon,
+            APP_INFO.APP_VERSION app_version,
+            APP_INFO.APP_URL app_url,
+            APP_INFO.APP_IMG app_img,
+            APP_INFO.APP_DESC app_desc,
+            APP_INFO.APP_SIZE app_size,
+            APP_INFO.APP_COUNT app_count,
+            APP_INFO.APP_LEVEL app_level,
+            APP_INFO.CREATE_TIME create_time,
+            APP_INFO.UPDATE_TIME update_time,
+            APP_INFO.JSON_DATA json_data,
+            APP_INFO.PROVIDER provider,
+            APP_INFO.PRICE price,
+            APP_INFO.FREE_FREQUENCY free_frequency,
+            APP_INFO.CHARGE_TYPE charge_type,
+            APP_INFO.PACKGE packge,
+            APP_INFO.FREE_TIME free_time
+            FROM
+            PACKGE_INFO
+             JOIN APP_INFO ON APP_INFO.PACKGE = PACKGE_INFO.PACKGE_NAME
+
+
+	</select>
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultType="com.app.model.PackgeInfo"
+            parameterType="int">
+		select * from PACKGE_INFO where PACKGE_ID = #{packgeId,jdbcType=VARCHAR}
+	</select>
+
+    <!-- 根据名字查询 -->
+    <select id="selectByName" resultType="com.app.model.PackgeInfo"
+            parameterType="java.lang.String">
+		select * from PACKGE_INFO where PACKGE_NAME = #{packgeName,jdbcType=VARCHAR}
+	</select>
+    <!-- 分页查询 -->
+    <select id="selectPageList" parameterType="Map" resultType="com.app.model.PackgeInfo">
+        select * from
+        (select a.*, rownum rn from
+        (select b.* from packge_info b
+        <where>
+            <if test="packgeName != null">b.packge_name like #{packgeName}</if>
+        </where>
+        ORDER BY b.packge_critme
+        ) a
+        where rownum &lt;= #{endRow}) c
+        where c.rn &gt;= #{startRow}
+    </select>
+
+    <!-- 分页查询总条数 -->
+    <select id="selectTotalRows" parameterType="Map" resultType="int">
+        select count(*) from packge_info
+        <where>
+            <if test="packgeName != null">packge_name like #{packgeName}</if>
+        </where>
+    </select>
+
+    <!-- 修改数据 -->
+    <update id="update" parameterType="com.app.model.PackgeInfo">
+        update PACKGE_INFO
+        <set>
+            <if test="packgeType != null">
+                PACKGE_TYPE = #{packgeType,jdbcType=VARCHAR},
+            </if>
+            <if test="packgeCritme != null">
+                PACKGE_CRITME = #{packgeCritme,jdbcType=VARCHAR},
+            </if>
+            <if test="packgeUrl != null">
+                PACKGE_URL = #{packgeUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="packgeName != null">
+                PACKGE_NAME = #{packgeName,jdbcType=VARCHAR},
+            </if>
+            <if test="packgeOrde != null">
+                PACKGE_ORDE = #{packgeOrde,jdbcType=VARCHAR},
+            </if>
+            <if test="packgeTerm != null">
+                PACKGE_TERM = #{packgeTerm,jdbcType=VARCHAR},
+            </if>
+            <if test="packgeStatus != null">
+                PACKGE_STATUS = #{packgeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="packgePrice != null">
+                PACKGE_PRICE = #{packgePrice,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null and productId!=''">
+                PRODUCT_ID = #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="spId != null and spId!=''">
+                SP_ID = #{spId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where PACKGE_ID = #{packgeId,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+		delete from PACKGE_INFO where PACKGE_ID = #{packgeId,jdbcType=VARCHAR}
+	</delete>
+
+</mapper>

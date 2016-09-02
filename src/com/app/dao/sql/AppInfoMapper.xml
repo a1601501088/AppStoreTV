@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.dao.AppInfoMapper">
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="appInfo">
+        insert into app_info
+        (app_id, class_id, app_name, app_short_name, app_icon, app_version, app_url,
+        app_img, app_desc, app_size, app_count, app_level, create_time, update_time,json_data,show_name
+        ,app_code,app_gread,product_id,sp_id,provider,price,free_frequency,charge_type,packge)
+        values
+        (#{appId}, #{classId}, #{appName, jdbcType=VARCHAR}, #{appShortName, jdbcType=VARCHAR}, #{appIcon, jdbcType=VARCHAR}, #{appVersion, jdbcType=VARCHAR}, #{appUrl, jdbcType=VARCHAR},
+        #{appImg, jdbcType=VARCHAR}, #{appDesc, jdbcType=VARCHAR}, #{appSize, jdbcType=VARCHAR}, #{appCount, jdbcType=VARCHAR}, #{appLevel, jdbcType=VARCHAR},
+        to_char( SYSDATE,'YYYY-MM-DD HH24:MI:SS'),to_char( SYSDATE,'YYYY-MM-DD HH24:MI:SS'),#{jsonData, jdbcType=VARCHAR},#{showName, jdbcType=VARCHAR},#{appCode, jdbcType=VARCHAR},#{appGread, jdbcType=VARCHAR},#{productId, jdbcType=VARCHAR},#{spId, jdbcType=VARCHAR}
+        ,#{provider, jdbcType=VARCHAR} ,#{price, jdbcType=VARCHAR},#{freeFrequency, jdbcType=VARCHAR},#{chargeType, jdbcType=VARCHAR},#{packge, jdbcType=VARCHAR})
+        <selectKey resultType="int" keyProperty="appId" order="BEFORE">
+            select to_char(sysdate,'hh24miss')||to_char(seq_app_id.nextval,'fm0000') from  dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="appInfo">
+        update app_info
+        <set>
+            <if test="classId != null and classId != 0">
+                class_id = #{classId, jdbcType=INTEGER},
+            </if>
+            <if test="appName != null">
+                app_name = #{appName, jdbcType=VARCHAR},
+            </if>
+            <if test="appShortName != null">
+                app_short_name = #{appShortName, jdbcType=VARCHAR},
+            </if>
+            <if test="appIcon != null">
+                app_icon = #{appIcon, jdbcType=VARCHAR},
+            </if>
+            <if test="appVersion != null">
+                app_version = #{appVersion, jdbcType=VARCHAR},
+            </if>
+            <if test="appUrl != null">
+                app_url = #{appUrl, jdbcType=VARCHAR},
+            </if>
+            <if test="appImg != null">
+                app_img = #{appImg, jdbcType=VARCHAR},
+            </if>
+            <if test="appDesc != null">
+                app_desc = #{appDesc, jdbcType=VARCHAR},
+            </if>
+            <if test="appSize != null">
+                app_size = #{appSize, jdbcType=VARCHAR},
+            </if>
+            <if test="appLevel != null and appLevel != 0">
+                app_level = #{appLevel, jdbcType=INTEGER},
+            </if>
+            <if test="appCount != null and appCount != 0">
+                app_count = #{appCount, jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="jsonData != null">
+                json_Data= #{jsonData, jdbcType=VARCHAR},
+            </if>
+            <if test="provider != null">
+                provider= #{provider, jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price= #{price, jdbcType=VARCHAR},
+            </if>
+            <if test="freeFrequency != null">
+                free_Frequency= #{freeFrequency, jdbcType=VARCHAR},
+            </if>
+            <if test="chargeType != null">
+                charge_Type= #{chargeType, jdbcType=VARCHAR},
+            </if>
+            <if test="packge != null">
+                packge= #{packge, jdbcType=VARCHAR},
+            </if>
+            <if test="showName != null">
+                show_Name= #{showName, jdbcType=VARCHAR},
+            </if>
+            <if test="appCode != null">
+                app_Code= #{appCode, jdbcType=VARCHAR},
+            </if>
+            <if test="appGread != null">
+                app_Gread= #{appGread, jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null and productId!=''">
+                product_id= #{productId, jdbcType=VARCHAR},
+            </if>
+            <if test="spId != null and spId!=''">
+                sp_id= #{spId, jdbcType=VARCHAR}
+            </if>
+        </set>
+        where app_id = #{appId, jdbcType=INTEGER}
+    </update>
+    <!--根据appId更新下载次数，次数加1-->
+    <update id="updateDownloadNmber" parameterType="com.app.model.AppInfo">
+       update app_info set app_count=#{appCount, jdbcType=INTEGER}+1 where app_id=#{appId, jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="int">
+		delete from app_info where app_id = #{app_id, jdbcType=INTEGER}
+	</delete>
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" parameterType="int" resultType="appInfo">
+		select * from app_info where app_id = #{app_id, jdbcType=INTEGER}
+	</select>
+
+    <!-- 根据名称查询 -->
+    <select id="selectByName" parameterType="String" resultType="appInfo">
+		select * from app_info where app_name = #{appName, jdbcType=VARCHAR}
+	</select>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" parameterType="Map" resultType="appInfo">
+        select * from
+        (select a.*, rownum rn from
+        (select b.*,d.class_name from app_info b, app_class d
+        <where>
+            b.class_id = d.class_id
+            <if test="appName != null">and b.app_name like #{appName}</if>
+        </where>
+      ORDER BY b.app_id DESC ) a
+        where rownum &lt;= #{endRow}) c
+        where c.rn &gt;= #{startRow}
+    </select>
+
+    <!-- 分页查询总条数 -->
+    <select id="selectTotalRows" parameterType="Map" resultType="int">
+        select count(*) from app_info b, app_class d
+        <where>
+            b.class_id = d.class_id
+            <if test="appName != null">and app_name like #{appName}</if>
+        </where>
+    </select>
+
+    <!-- 提供给接口查询   -->
+    <select id="selectAll" parameterType="Map" resultType="appInfo">
+        select a.*,b.class_name from app_info a, app_class b
+        <where>
+            a.class_id = b.class_id
+            <if test="appId != null">and app_id = #{appId}</if>
+            <if test="appName != null">and app_name like #{appName}</if>
+            <if test="classId != null">and class_id = #{classId}</if>
+            <if test="appLevel != null">and app_level = #{appLevel, jdbcType=INTEGER}</if>
+            <if test="appShortName != null">and app_short_name like #{appShortName, jdbcType=VARCHAR}</if>
+        </where>
+    </select>
+
+    <!-- 找出app_info 表中 的一条记录-->
+    <select id="queryApp" parameterType="com.app.model.UserApp" resultType="com.app.model.AppInfo">
+		SELECT * FROM APP_INFO WHERE APP_ID = #{appId}
+	</select>
+
+
+    <!-- 根据专区名称查询-->
+    <select id="queryAppByPackgeName" parameterType="String" resultType="com.app.model.AppInfo">
+		select * from app_info where packge = #{packgeName, jdbcType=INTEGER}
+	</select>
+    <!--根据id查找-->
+    <select id="queryAppById" parameterType="String" resultType="com.app.model.AppInfo">
+        select * from app_info WHERE APP_ID = #{appId, jdbcType=VARCHAR}
+    </select>
+</mapper>

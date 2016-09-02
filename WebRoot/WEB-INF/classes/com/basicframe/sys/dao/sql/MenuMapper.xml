@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.basicframe.sys.dao.MenuMapper">
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="menu">
+		insert into sys_menu (menu_id, parent_id, menu_name, menu_pic, menu_url, menu_order, is_disabled, is_modify, is_remove, is_open)
+		values (#{menuId},#{parentId},#{menuName},#{menuPic},#{menuUrl},#{menuOrder},#{isOpen},#{isDisabled},#{isModify},#{isRemove})
+		<selectKey resultType="int" keyProperty="menuId" order="BEFORE">
+			select seq_menu_id.nextval from dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="menu">
+		update sys_menu set menu_name = #{menuName} ,menu_pic = #{menuPic,jdbcType=VARCHAR}, menu_url = #{menuUrl,jdbcType=VARCHAR}, menu_order = #{menuOrder},
+		is_disabled = #{isDisabled}, is_modify = #{isModify}, is_remove = #{isRemove}, is_open = #{isOpen} where menu_id = #{menuId} and is_modify = 1
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from sys_menu where menu_id = #{menuId} and is_remove = 1
+	</delete>
+	
+	<!-- 根据ID查询 -->
+	<select id="selectById" parameterType="int" resultType="menu">
+		select * from sys_menu where menu_id = #{menuId}
+	</select>
+	
+	<!-- 根据名称查询 -->
+	<select id="selectByName" parameterType="String" resultType="menu">
+		select * from sys_menu where menu_name = #{menuName}
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="selectAll" resultType="menu">
+		select * from sys_menu order by parent_id, menu_order asc
+	</select>
+	
+	<!-- 根据父类ID查询 -->
+	<select id="selectByParentId" parameterType="int" resultType="menu">
+		select * from sys_menu where parent_id = #{parentId} order by parent_id, menu_order asc
+	</select>
+	
+	<!-- 查询管理员菜单 -->
+	<select id="selectUserMenu" parameterType="int" resultType="menu">
+		select * from sys_menu where menu_id in (select menu_id from sys_role_menu where role_id in 
+		(select role_id from sys_user_role where user_id = #{userId})) order by parent_id, menu_order asc
+	</select>
+	
+	<!-- 查询可赋权的角色权限菜单 -->
+	<select id="selectRoleMenu" parameterType="int" resultType="menu">
+		select * from sys_menu where menu_id in (select menu_id from sys_role_menu where role_id = #{roleId}) 
+		and menu_id not in (select parent_id from sys_menu) order by parent_id, menu_id asc
+	</select>
+	
+	<!-- 查询所有可赋权的权限菜单 -->
+	<select id="selectPerMenu" resultType="menu">
+		select * from sys_menu where menu_id not in (select parent_id from sys_menu) order by parent_id, menu_id asc
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="selectPageList" parameterType="Map" resultType="menu">
+		select * from
+			(select a.*, rownum rn from sys_menu a where rownum &lt;= #{endRow}) b
+		where b.rn &gt;= #{startRow}
+	</select>
+	
+	<!-- 分页查询总条数 -->
+	<select id="selectTotalRows" parameterType="Map" resultType="int">
+		select count(*) from sys_menu
+	</select>
+	
+</mapper>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.dao.UpdateInfoMapper">
+
+	<!-- 根据ID查询 -->
+	<select id="selectById" parameterType="int" resultType="updateInfo">
+		select * from update_info where update_id = #{id, jdbcType=INTEGER}
+	</select>
+	
+</mapper>

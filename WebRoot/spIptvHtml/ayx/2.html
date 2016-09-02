@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>爱游戏专区</title>
+    <link rel="stylesheet" href="css/reset.css"/>
+	<script src="js/vendor/egame.min.js"></script>
+	<style>
+		body{background: url('images/background.jpg') no-repeat;background-size: cover;position: relative;}
+		/* .side_left{width: 16.667rem;height: 18.0804rem;position: absolute;bottom: 5.583rem;left: 8.25rem;}
+		.side_left img{width: 16.667rem;height: 18.0804rem;}
+		.side_right{width: 16.667rem;height: 18.0804rem;position: absolute;bottom: 5.583rem;right: 8.25rem;}
+		.side_right img{width: 16.667rem;height: 18.0804rem;}
+		.middle{width: 16.667rem;height: 18.0804rem;position: absolute;bottom: 5.583rem;left: 50%;margin-left: -8.3335rem;}
+		.middle img{width: 16.667rem;height: 18.0804rem;}
+		.side_left_selected{width: 20.25rem;height: 22.0702rem;position: absolute;bottom: 3.5932rem;left: 6.25rem;}
+		.side_left_selected img{width: 20.25rem;height: 22.0702rem;}
+		.side_right_selected{width: 20.25rem;height: 22.0702rem;position: absolute;bottom: 3.5932rem;right: 6.25rem;}
+		.side_right_selected img{width: 20.25rem;height: 22.0702rem;}
+		.middle_selected{width: 20.25rem;height: 22.0702rem;position: absolute;bottom: 3.5932rem;left: 50%;margin-left: -10.125rem;}
+		.middle_selected img{width: 20.25rem;height: 22.0702rem;} */
+		.games{width: 66.834rem;height: 25.333rem;overflow: hidden;position: absolute;top: 18.25rem;left: 50%;margin-left: -33.417rem;}
+		.game_arr{width: 100%;position: absolute;left: 0;top: 0rem;}
+		.row{padding: 2rem 1.9583rem;margin-bottom: 0.407rem;}
+		.game{position: relative;margin-right: 1.3667rem;display: inline-block;}
+		.last{margin-right: 0;}
+		.small_game{position: relative;}
+		.game .small{width: 11.25rem;height: 15rem;}
+		.game .small img{width: 11.25rem;height: 15rem;}
+		.small_game .title{width: 11.25rem;height: 2.667rem;line-height: 2.667rem;text-align: center;background: rgba(0,0,0,0.5);font-size: 1.25rem;color: #fff;position: absolute;left: 0;bottom: 0;}
+		.big_game{position: absolute;left: -0.625rem;top: -0.833rem;display: none;}
+		.game .big{width: 12.5rem;height: 16.667rem;}
+		.game .big img{width: 12.5rem;height: 16.667rem;}
+		.big_game .title{width: 12.5rem;height: 2.875rem;line-height: 2.875rem;font-size: 1.333rem;}
+		.border{width: 15.167rem;height: 19rem;position: absolute;top: -1.1665rem;left: -1.3335rem;}
+		.border img{width: 15.167rem;height: 19rem;}
+		.btn_hall{width: 5.1667rem;height: 4.875rem;position: absolute;bottom: 0.2667rem;right: 0.74458rem;}
+		.btn_hall img{width: 5.1667rem;height: 4.875rem;} 
+		.arrow{position: absolute;top: 22.9165rem;left: 0.8rem;}
+		.arrow_small{width: 3.875rem;height: 9.667rem;}
+		.arrow_small img{width: 3.875rem;height: 9.667rem;}
+		.arrow_big{position: absolute;left: -0.6665rem;top: -0.6665rem;}
+		.arrow_big img{width: 5.208rem;height: 11rem;}
+		.arrow_right{position: absolute;top: 22.9165rem;right: 0.8rem;}
+    </style>
+</head>
+
+<body>
+	<div class="arrow">
+		<div class="small_game">
+			<a id="pre" class="arrow_small small" grid="1-1" rank="0"><img src="./images/btn_pre.png"></a>
+		</div>
+		<div class="arrow_big big_game">
+				<div>
+					<img src="./images/border_btn.png" alt="">
+				</div>
+		</div>
+	</div> 
+	<div class="games">
+		<div class="game_arr" id="game_arr">
+			<div class="row row2" id="row2">
+				<div class="game">
+					<div class="small_game">
+						<a id="354" class="small" grid="1-2" rank="1"><img src="./images/6.png"></a>
+						<div class="title">搬运工</div>
+					</div>
+					<div class="big_game small_game">
+						<a id="354" class="big" grid="1-2"><img src="./images/6_6.png"></a>
+						<div class="title">搬运工</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="game">
+					<div class="small_game">
+						<a id="355" class="small" grid="1-3" rank="2"><img src="./images/7.png"></a>
+						<div class="title">达人秀</div>
+					</div>
+					<div class="big_game small_game">
+						<a id="355" class="big" grid="1-3"><img src="./images/7_7.png"></a>
+						<div class="title">达人秀</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="game">
+					<div class="small_game">
+						<a id="358" class="small" grid="1-4" rank="3"><img src="./images/13.jpg"></a>
+						<div class="title">土地主</div>
+					</div>
+					<div class="big_game small_game">
+						<a id="358" class="big" grid="1-4"><img src="./images/13_13.jpg"></a>
+						<div class="title">土地主</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="game">
+					<div class="small_game">
+						<a id="353" class="small" grid="1-5" rank="4"><img src="./images/12.jpg"></a>
+						<div class="title">盒子先生</div>
+					</div>
+					<div class="big_game small_game">
+						<a id="353" class="big" grid="1-5"><img src="./images/12_12.jpg"></a>
+						<div class="title">盒子先生</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="game last">
+					<div class="small_game">
+						<a id="361" class="small" grid="1-6" rank="5"><img src="./images/14.jpg"></a>
+						<div class="title">德瓦鲁</div>
+					</div>
+					<div class="big_game small_game">
+						<a id="361" class="big" grid="1-6"><img src="./images/14_14.jpg"></a>
+						<div class="title">德瓦鲁</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="row row2" id="row2">
+				<div class="game">
+					<div class="small_game">
+						<a href="javascript:void(0);" id="201" class="small" grid="2-1" rank="5"><img src="./images/6.png"></a>
+						<div class="title">搬运工</div>
+					</div>
+					<div class="big_game small_game">
+						<a href="javascript:void(0);" id="201" class="big" grid="2-1"><img src="./images/6_6.png"></a>
+						<div class="title">搬运工</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="game">
+					<div class="small_game">
+						<a href="javascript:void(0);" id="201" class="small" grid="2-2" rank="6"><img src="./images/7.png"></a>
+						<div class="title">达人秀</div>
+					</div>
+					<div class="big_game small_game">
+						<a href="javascript:void(0);" id="201" class="big" grid="2-2"><img src="./images/7_7.png"></a>
+						<div class="title">达人秀</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="game">
+					<div class="small_game">
+						<a href="javascript:void(0);" id="201" class="small" grid="2-3" rank="7"><img src="./images/8.png"></a>
+						<div class="title">特困生</div>
+					</div>
+					<div class="big_game small_game">
+						<a href="javascript:void(0);" id="201" class="big" grid="2-3"><img src="./images/8_8.png"></a>
+						<div class="title">特困生</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="game">
+					<div class="small_game">
+						<a href="javascript:void(0);" id="201" class="small" grid="2-4" rank="8"><img src="./images/9.jpg"></a>
+						<div class="title">猪猪特攻队</div>
+					</div>
+					<div class="big_game small_game">
+						<a href="javascript:void(0);" id="201" class="big" grid="2-4"><img src="./images/9_9.jpg"></a>
+						<div class="title">猪猪特攻队</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="game last">
+					<div class="small_game">
+						<a href="javascript:void(0);" id="201" class="small" grid="2-5" rank="9"><img src="./images/10.jpg"></a>
+						<div class="title">泡泡小狐狸</div>
+					</div>
+					<div class="big_game small_game">
+						<a href="javascript:void(0);" id="201" class="big" grid="2-5"><img src="./images/10_10.jpg"></a>
+						<div class="title">泡泡小狐狸</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row row3" id="row3">
+				<div class="game">
+					<div class="small_game">
+						<a href="javascript:void(0);" id="201" class="small" grid="3-1" rank="10"><img src="./images/11.jpg"></a>
+						<div class="title">超级凯能方块</div>
+					</div>
+					<div class="big_game small_game">
+						<a href="javascript:void(0);" id="201" class="big" grid="3-1"><img src="./images/11_11.jpg"></a>
+						<div class="title">超级凯能方块</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="game">
+					<div class="small_game">
+						<a href="javascript:void(0);" id="201" class="small" grid="3-2" rank="11"><img src="./images/12.jpg"></a>
+						<div class="title">盒子先生</div>
+					</div>
+					<div class="big_game small_game">
+						<a href="javascript:void(0);" id="201" class="big" grid="3-2"><img src="./images/12_12.jpg"></a>
+						<div class="title">盒子先生</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="game">
+					<div class="small_game">
+						<a href="javascript:void(0);" id="201" class="small" grid="3-3" rank="12"><img src="./images/13.jpg"></a>
+						<div class="title">土地主</div>
+					</div>
+					<div class="big_game small_game">
+						<a href="javascript:void(0);" id="201" class="big" grid="3-3"><img src="./images/13_13.jpg"></a>
+						<div class="title">土地主</div>
+						<div class="border">
+							<img src="./images/border.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+	<div class="arrow_right">
+		<div class="arrow_small small_game">
+			<a id="next" class="small" grid="1-7" rank="6"><img src="./images/btn_next.png"></a>
+		</div>
+		<div class="arrow_big big_game">
+				<div>
+					<img src="./images/border_btn.png" alt="">
+				</div>
+		</div>
+	</div>
+	<script>
+	var currentKey=[1,2];
+	var selectedID='';
+	var clickKeyboard=false;
+	window.onload=function(){
+		//alert(123);
+		document.querySelectorAll('.big_game')[1].style.display = "block";
+		document.addEventListener('keyup',keyboard);
+
+		//bingClickEvent('next');
+		//bingClickEvent('146');
+		//bingClickEvent('202');
+	}
+	function keyboard(e){
+		e = e || window.event;
+		e.preventDefault();
+		e.stopPropagation();
+		switch(e.keyCode){
+			case 37:
+				// 向左
+				moveKeyfocus(0,-1);
+				break;
+			case 38:
+				// 向上
+				moveKeyfocus(-1,0);
+				break;
+			case 39:
+				// 向右
+				moveKeyfocus(0,1);
+				break;
+			case 40:
+				// 向下
+				moveKeyfocus(1,0);
+				break;
+			case 13:
+				// 回车
+
+				/*if(!clickKeyboard)clickKeyboard=true;
+				else {clickKeyboard=false;
+					return;
+				}*/
+				if(selectedID){
+					/*ajax('GET', tongjiurl,{actName:'tv_hunan',action:'click',ext1:selectedID},
+							function (err,data) {*/
+								eventcatch(selectedID);
+							/*}
+					);*/
+				}
+				break;
+		}
+	}
+	function moveKeyfocus(hang,lie){
+		/*if(currentKey[0]==0&&currentKey[1]==0){
+			currentKey=[1,1];
+		}else */if(hang){
+			currentKey[0] = 1;
+			/*if(currentKey[0]<=0)currentKey[0]=1;
+			if(currentKey[0]>2)currentKey[0]=2;
+			if(currentKey[0]==2)currentKey[1]=5;*///焦点聚在领取按钮所在一行的任意按钮情况下，在遥控器上点向下按钮，调到返回大厅04/21
+		}else{
+			currentKey[1]+=lie;
+			if(currentKey[1]<=0)/*currentKey[1]=1;*/{/*currentKey[1]=4;*/currentKey[1]=1;}
+			if(currentKey[1]>7){//焦点聚在查看领奖方式按钮上，向右点击跳到返回大厅04/21
+				currentKey[1]=7;
+				/*if(currentKey[0]==1){
+					currentKey[0]=2;
+				}*/
+			}
+			/*if(currentKey[1]==4 && currentKey[0]==2){
+			//焦点聚在返回大厅按钮上，向左点击跳到查看方式按钮04/21
+				currentKey[0]=1;
+				currentKey[1]=5;
+			}*/
+
+		}
+		
+		for(var i = 0;i < document.querySelectorAll('.big_game').length;i++){
+			document.querySelectorAll('.big_game')[i].style.display = "none";
+		}
+
+		var arr=document.querySelectorAll('.small');
+		for(var i=0,len=arr.length;i<len;i++){
+			var grid=arr[i].getAttribute('grid').split('-');
+			if(grid[0].indexOf(currentKey[0])>-1&&grid[1].indexOf(currentKey[1])>-1){
+				
+				//arr[i].focus();
+				if(currentKey[0] == 1){
+					document.querySelectorAll('.big_game')[arr[i].getAttribute('rank')].style.display = "block";
+					console.log(currentKey);
+				}
+				selectedID=arr[i].getAttribute('id');
+				return;
+			}
+		}
+	}
+	function bingClickEvent(id){//绑定点击事件 电视bug
+		document.getElementById(id).addEventListener('click', function (e) {
+			e = e || window.event;
+			e.preventDefault();
+			e.stopPropagation();
+			if(!clickKeyboard)clickKeyboard=true;
+			else {clickKeyboard=false;
+				return;
+			}
+			//selectedID=id;
+			/*ajax('GET', tongjiurl,{actName:'tv_hunan',action:'click',ext1:selectedID},
+					function (err,data) {*/
+						//eventcatch(selectedID);
+					/*}
+			);*/
+			switchPage();
+		});
+	}
+	function eventcatch(selectedID){
+		//window.quelly.getAppClass(app_id);
+		if(selectedID == 'next'){
+			window.location.href = "3.html";
+		}else if(selectedID == 'pre'){
+			window.location.href = "index.html";
+			//window.jsCall.closeWindow();
+		}else{
+			window.quelly.getAppClass(selectedID);
+		}
+	}
+	function switchPage(){
+		window.location.href = 'next.html';
+	}
+	</script>
+</body>
+</html>

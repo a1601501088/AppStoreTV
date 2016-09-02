@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.app.dao.IndexListInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.app.model.IndexListInfo" >
+    <result column="INDEX_ID" property="indexId" jdbcType="DECIMAL" />
+    <result column="INDEX_NAME" property="indexName" jdbcType="VARCHAR" />
+    <result column="STAUTS" property="stauts" jdbcType="VARCHAR" />
+    <result column="TOP_IMAGE_URL" property="topImageUrl" jdbcType="VARCHAR" />
+    <result column="TOP_EXECTE_PACKGE" property="topExectePackge" jdbcType="VARCHAR" />
+    <result column="TOP_EXECTE_ACTIVITY" property="topExecteActivity" jdbcType="VARCHAR" />
+    <result column="TOP_EXECTE_PARA" property="topExectePara" jdbcType="VARCHAR" />
+    <result column="BOTTOM_IMAGE_URL" property="bottomImageUrl" jdbcType="VARCHAR" />
+    <result column="BOTTOM_EXECTE_PACKGE" property="bottomExectePackge" jdbcType="VARCHAR" />
+    <result column="BOTTOM_EXECTE_ACTIVITY" property="bottomExecteActivity" jdbcType="VARCHAR" />
+    <result column="BOTTOM_EXECTE_PARA" property="bottomExectePara" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.app.model.IndexListInfo" >
+    insert into INDEX_LIST_INFO (INDEX_ID, INDEX_NAME, STAUTS, 
+      TOP_IMAGE_URL, TOP_EXECTE_PACKGE, TOP_EXECTE_ACTIVITY, 
+      TOP_EXECTE_PARA, BOTTOM_IMAGE_URL, BOTTOM_EXECTE_PACKGE, 
+      BOTTOM_EXECTE_ACTIVITY, BOTTOM_EXECTE_PARA, 
+      CREATE_TIME, ORDER_NO)
+    values (#{indexId,jdbcType=DECIMAL}, #{indexName,jdbcType=VARCHAR}, #{stauts,jdbcType=VARCHAR}, 
+      #{topImageUrl,jdbcType=VARCHAR}, #{topExectePackge,jdbcType=VARCHAR}, #{topExecteActivity,jdbcType=VARCHAR}, 
+      #{topExectePara,jdbcType=VARCHAR}, #{bottomImageUrl,jdbcType=VARCHAR}, #{bottomExectePackge,jdbcType=VARCHAR}, 
+      #{bottomExecteActivity,jdbcType=VARCHAR}, #{bottomExectePara,jdbcType=VARCHAR},
+    SYSDATE, #{orderNo,jdbcType=VARCHAR})
+      <selectKey keyProperty="indexId" order="BEFORE" resultType="long">
+        select SEQ_INDEXLIST_ID.nextval from dual
+      </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.app.model.IndexListInfo" >
+    insert into INDEX_LIST_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="indexId != null" >
+        INDEX_ID,
+      </if>
+      <if test="indexName != null" >
+        INDEX_NAME,
+      </if>
+      <if test="stauts != null" >
+        STAUTS,
+      </if>
+      <if test="topImageUrl != null" >
+        TOP_IMAGE_URL,
+      </if>
+      <if test="topExectePackge != null" >
+        TOP_EXECTE_PACKGE,
+      </if>
+      <if test="topExecteActivity != null" >
+        TOP_EXECTE_ACTIVITY,
+      </if>
+      <if test="topExectePara != null" >
+        TOP_EXECTE_PARA,
+      </if>
+      <if test="bottomImageUrl != null" >
+        BOTTOM_IMAGE_URL,
+      </if>
+      <if test="bottomExectePackge != null" >
+        BOTTOM_EXECTE_PACKGE,
+      </if>
+      <if test="bottomExecteActivity != null" >
+        BOTTOM_EXECTE_ACTIVITY,
+      </if>
+      <if test="bottomExectePara != null" >
+        BOTTOM_EXECTE_PARA,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="indexId != null" >
+        #{indexId,jdbcType=DECIMAL},
+      </if>
+      <if test="indexName != null" >
+        #{indexName,jdbcType=VARCHAR},
+      </if>
+      <if test="stauts != null" >
+        #{stauts,jdbcType=VARCHAR},
+      </if>
+      <if test="topImageUrl != null" >
+        #{topImageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="topExectePackge != null" >
+        #{topExectePackge,jdbcType=VARCHAR},
+      </if>
+      <if test="topExecteActivity != null" >
+        #{topExecteActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="topExectePara != null" >
+        #{topExectePara,jdbcType=VARCHAR},
+      </if>
+      <if test="bottomImageUrl != null" >
+        #{bottomImageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bottomExectePackge != null" >
+        #{bottomExectePackge,jdbcType=VARCHAR},
+      </if>
+      <if test="bottomExecteActivity != null" >
+        #{bottomExecteActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="bottomExectePara != null" >
+        #{bottomExectePara,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="queryAllList" resultType="com.app.model.IndexListInfo">
+    SELECT * FROM INDEX_LIST_INFO WHERE stauts = '1' order by order_no DESC
+  </select>
+  <!-- 分页查询 -->
+  <select id="selectPageList" parameterType="Map" resultType="com.app.model.IndexListInfo">
+    select * from
+    (select a.*, rownum rn from
+
+    (select b.* from index_list_info b
+    <where>
+      <if test="indexName != null">b.index_name like #{indexName}</if>
+    </where>
+    order by b.create_time desc) a
+    where rownum &lt;= #{endRow}) c
+    where c.rn &gt;= #{startRow}
+  </select>
+
+  <!-- 分页查询总条数 -->
+  <select id="selectTotalRows" parameterType="Map" resultType="int">
+    select count(*) from index_list_info
+    <where>
+      <if test="indexName != null">index_name like #{indexName}</if>
+    </where>
+  </select>
+
+  <!-- 根据ID查询 -->
+  <select id="selectById" parameterType="int" resultType="com.app.model.IndexListInfo">
+    select * from index_list_info where index_id = #{indexId, jdbcType=INTEGER}
+  </select>
+
+  <update id="update" parameterType="com.app.model.IndexListInfo">
+    UPDATE index_list_info
+    <set>
+      <if test="indexName!=null and indexName!=''">
+          index_name = #{indexName,jdbcType=VARCHAR},
+      </if>
+      <if test="stauts!=null and stauts!=''">
+        stauts = #{stauts,jdbcType=VARCHAR},
+      </if>
+      <if test="topImageUrl!=null and topImageUrl!=''">
+        top_Image_Url = #{topImageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="topExectePackge!=null and topExectePackge!=''">
+        TOP_EXECTE_PACKGE = #{topExectePackge,jdbcType=VARCHAR},
+      </if>
+      <if test="topExecteActivity!=null and topExecteActivity!=''">
+        top_Execte_Activity = #{topExecteActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="topExectePara!=null and topExectePara!=''">
+        top_Execte_Para = #{topExectePara,jdbcType=VARCHAR},
+      </if>
+      <if test="bottomImageUrl!=null and bottomImageUrl!=''">
+        bottom_Image_Url = #{bottomImageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bottomExectePackge!=null and bottomExectePackge!=''">
+        bottom_Execte_Packge = #{bottomExectePackge,jdbcType=VARCHAR},
+      </if>
+      <if test="bottomExecteActivity!=null and bottomExecteActivity!=''">
+        bottom_Execte_Activity = #{bottomExecteActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="bottomExectePara!=null and bottomExectePara!=''">
+        bottom_Execte_Para = #{bottomExectePara,jdbcType=VARCHAR}
+      </if>
+
+    </set>
+    WHERE index_id = #{indexId,jdbcType=INTEGER}
+  </update>
+
+
+  <!-- 删除 -->
+  <delete id="delete" parameterType="int">
+    delete from index_list_info where index_id = #{indexId, jdbcType=INTEGER}
+  </delete>
+
+
+</mapper>

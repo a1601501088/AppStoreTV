@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.basicframe.sys.dao.AttachmentMapper">
+
+	<!-- 插入 -->
+	<insert id="insert" parameterType="attachment">
+		insert into attachment (id, name, type, size, path, time)
+		values (#{id},#{name},#{type},#{size},#{path},#{time})
+	</insert>
+	
+	<!-- 根据ID查询 -->
+	<select id="selectById" parameterType="int" resultType="attachment">
+		select * from attachment where id = #{id}
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="selectAll" parameterType="int" resultType="attachment">
+		select * from Attachment
+	</select>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from Attachment where id = #{id}
+	</delete>
+	
+</mapper>

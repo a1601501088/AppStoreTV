@@ -1,0 +1,27 @@
+/* CSS Document */
+/* 页面基础样式 */
+body {	font-size: 12px; margin: 0px; padding: 0px;	color: #545454;	text-decoration: none;	font-family: Arial, Helvetica, sans-serif; background-color:#000000}
+img{border: none;}
+.fl {float: left;}
+.fr {float: right;}
+.t_red {color: #D50800;}
+.f_12{font-size: 12px;}
+.clear{clear: both;}
+a:link,a:visited,a:hover,a:active {text-decoration: none;color: #545454;}
+form,menu,dir,fieldset,blockquote,p,pre,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6 { padding:0; margin:0; }
+ul,ol,dl { list-style:none; }
+
+/* 网页样式 */
+.bot_bg		{ position: absolute; width:100%; z-index: 10;}
+.bt01		{ width:60%; float:right; padding-top:8px; padding-right:10px; text-align:right}
+.bt02		{ font: 16px/30px "microsoft yahei"; color:#FFFFFF;width:70%; float:right;}
+.bt03		{ text-align:center; }
+.bt04		{ font:16px/18px "microsoft yahei"; color:#FFFFFF; }
+.bt05		{ font:16px/30px "microsoft yahei"; color:#FFFFFF; text-align:center;}
+.bt06		{ font: 16px/24px "microsoft yahei"; color:#FFFFFF;width:60%; float:right;}
+.bt06 li	{ clear:both;}
+.mc			{ width:25%; height:20px;font: 16px/20px "microsoft yahei"; color:#FFFFFF; display:block; float:left; text-align:center;}
+.xyz		{ width:35%; height:20px;font: 16px/20px "microsoft yahei"; color:#FFFFFF; display:block; float:left; text-align:center;}
+.nc			{ width:35%; height:20px;font: 16px/20px "microsoft yahei"; color:#FFFFFF; display:block; float:left; text-align:center;}
+.bt07		{ font: 14px/24px "microsoft yahei"; color:#FFFFFF;width:60%; float:right; text-align:center;}
+.bt07 a		{ color:#FFFFFF;}

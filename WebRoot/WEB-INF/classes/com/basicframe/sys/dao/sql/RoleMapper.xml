@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.basicframe.sys.dao.RoleMapper">
+
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="role">
+		insert into sys_role (role_id, role_name, role_info, status, create_time) values 
+		(#{roleId} ,#{roleName}, #{roleInfo}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR})
+		<selectKey resultType="int" keyProperty="roleId" order="BEFORE">
+			select seq_role_id.nextval from dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="role">
+		update sys_role set role_name = #{roleName}, role_info = #{roleInfo} where role_id = #{roleId}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from sys_role where role_id = #{roleId}
+	</delete>
+	
+	<!-- 根据ID查询 -->
+	<select id="selectById" parameterType="int" resultType="role">
+		select * from sys_role where role_id = #{roleId}
+	</select>
+	
+	<!-- 根据名称查询 -->
+	<select id="selectByName" parameterType="String" resultType="role">
+		select * from sys_role where role_name = #{roleName}
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="selectAll" resultType="role">
+		select * from sys_role
+	</select>
+	
+	<!-- 查询用户所拥有的角色 -->
+	<select id="selectUserRole" parameterType="int" resultType="role">
+		select *  from sys_role where role_id in (select role_id from sys_user_role where user_id = #{userId})
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="selectPageList" parameterType="Map" resultType="role">
+		select * from 
+			(select a.*, rownum rn from
+				(select b.* from sys_role b
+					<where>
+						<if test="roleName != null">b.role_name like #{roleName}</if>
+					</where>
+					order by b.create_time) a
+			where rownum &lt;= #{endRow}) c
+		where c.rn &gt;= #{startRow}
+	</select>
+	
+	<!-- 分页查询总条数 -->
+	<select id="selectTotalRows" parameterType="Map" resultType="int">
+		select count(*) from sys_role
+		<where>
+			<if test="roleName != null">role_name like #{roleName}</if>
+		</where>
+	</select>
+	
+</mapper>
